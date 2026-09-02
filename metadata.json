@@ -1,0 +1,6 @@
+{
+  "name": "TechVision 2026",
+  "description": "Official event discovery and registration portal for TechVision 2026 Engineer's Week (September 8–15, 2026).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
