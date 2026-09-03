@@ -373,7 +373,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           <span>Back to All Events</span>
         </button>
 
-        <div className="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 relative overflow-hidden shadow-xl">
+        <div className="bg-slate-900/90 rounded-sm p-6 border border-slate-800 relative overflow-hidden shadow-xl">
           <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${event.themeColor}`} />
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -397,15 +397,15 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                   {event.mode.toUpperCase()}
                 </span>
               </div>
-              <h1 className="font-display font-bold text-2xl sm:text-3xl text-white">
-                Registration for {event.name}
+              <h1 className="font-display font-semibold uppercase tracking-wide text-3xl sm:text-4xl text-white leading-none">
+                {event.name}
               </h1>
               <p className="text-xs font-mono text-cyan-300 mt-0.5">
                 {event.subtitle}
               </p>
             </div>
 
-            <div className="flex flex-col gap-1 text-xs font-mono text-slate-300 bg-slate-950/60 p-3 rounded-xl border border-slate-800 shrink-0">
+            <div className="flex flex-col gap-1 text-xs font-mono text-slate-300 bg-slate-950/60 p-3 rounded-sm border border-slate-800 shrink-0">
               <div className="flex items-center gap-2">
                 <Calendar className="w-3.5 h-3.5 text-cyan-400" />
                 <span>{event.formattedDate}</span>
@@ -431,7 +431,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           {/* Connector lines */}
           <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-0.5 bg-slate-800 -z-0">
             <div
-              className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300"
+              className="h-full bg-pencil transition-all duration-300"
               style={{
                 width: currentStep === 1 ? '0%' : currentStep === 2 ? '50%' : '100%',
               }}
@@ -444,7 +444,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
               onClick={() => setCurrentStep(1)}
               className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
                 currentStep >= 1
-                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30'
+                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
                   : 'bg-slate-850 text-slate-400 border border-slate-700'
               }`}
             >
@@ -463,7 +463,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
               }}
               className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
                 currentStep >= 2
-                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30'
+                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
               }`}
             >
@@ -479,7 +479,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             <div
               className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
                 currentStep === 3
-                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30'
+                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
                   : 'bg-slate-900 text-slate-400 border border-slate-800'
               }`}
             >
@@ -494,9 +494,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
       {/* STEP 1: PERSONAL OR TEAM LEADER DETAILS */}
       {currentStep === 1 && (
-        <form onSubmit={handleNextStep1} className="bg-slate-900/80 rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6 animate-in fade-in duration-200">
+        <form onSubmit={handleNextStep1} className="bg-slate-900/80 rounded-sm p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6 animate-in fade-in duration-200">
           <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-xl font-display font-bold text-white flex items-center gap-2">
+            <h2 className="text-2xl font-display font-semibold uppercase tracking-wide text-white flex items-center gap-2">
               {event.teamBased ? (
                 <>
                   <Users className="w-5 h-5 text-cyan-400" />
@@ -518,7 +518,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
           {/* If Team Event: Team Name & Team Size Selector */}
           {event.teamBased && (
-            <div className="p-5 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-5">
+            <div className="p-5 rounded-sm bg-slate-950/80 border border-purple-500/30 space-y-5">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-purple-300 uppercase tracking-wider">
                 <Sparkles className="w-4 h-4 text-purple-400" />
                 <span>Team Profile Configuration</span>
@@ -539,7 +539,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                       if (errors.teamName) setErrors({ ...errors, teamName: '' });
                     }}
                     placeholder="e.g. ByteCraft Pioneers / NeuralKnights"
-                    className={`w-full px-4 py-2.5 rounded-xl bg-slate-900 border ${
+                    className={`w-full px-4 py-2.5 rounded-sm bg-slate-900 border ${
                       errors.teamName ? 'border-red-500 focus:ring-red-500' : 'border-slate-700 focus:border-cyan-500'
                     } text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-1`}
                   />
@@ -557,7 +557,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     Total Team Size <span className="text-cyan-400">*</span>
                   </label>
                   {minTeamSize === maxTeamSize ? (
-                    <div className="py-2.5 px-3 rounded-xl text-xs font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-500/40 flex items-center justify-between">
+                    <div className="py-2.5 px-3 rounded-sm text-xs font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-500/40 flex items-center justify-between">
                       <span>Exactly {minTeamSize} Members</span>
                       <span className="text-[10px] text-purple-400/80 font-normal">Fixed Size</span>
                     </div>
@@ -568,9 +568,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           key={size}
                           type="button"
                           onClick={() => handleTeamSizeChange(size)}
-                          className={`flex-1 min-w-[70px] py-2 px-2 rounded-xl text-xs font-mono font-bold transition-all border ${
+                          className={`flex-1 min-w-[70px] py-2 px-2 rounded-sm text-xs font-mono font-bold transition-all border ${
                             teamSize === size
-                              ? 'bg-cyan-500 text-slate-950 border-cyan-400 shadow-md shadow-cyan-500/20'
+                              ? 'bg-pencil text-white border-pencil'
                               : 'bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500'
                           }`}
                         >
@@ -611,7 +611,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.fullName) setErrors({ ...errors, fullName: '' });
                   }}
                   placeholder="e.g. John Doe"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.fullName ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -637,7 +637,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.email) setErrors({ ...errors, email: '' });
                   }}
                   placeholder="e.g. john.doe@college.edu"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.email ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -663,7 +663,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.phone) setErrors({ ...errors, phone: '' });
                   }}
                   placeholder="e.g. 9876543210"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.phone ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -689,7 +689,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.college) setErrors({ ...errors, college: '' });
                   }}
                   placeholder="e.g. Vishwakarma Institute of Technology / IIT Bombay"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.college ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -715,7 +715,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.department) setErrors({ ...errors, department: '' });
                   }}
                   placeholder="e.g. Computer Science & Engineering"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.department ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -736,7 +736,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                   id="input-year"
                   value={commonInfo.year}
                   onChange={(e) => setCommonInfo({ ...commonInfo, year: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                  className="w-full px-4 py-2.5 rounded-sm bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
                 >
                   <option value="1st Year">1st Year (FE)</option>
                   <option value="2nd Year">2nd Year (SE)</option>
@@ -761,7 +761,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     if (errors.studentId) setErrors({ ...errors, studentId: '' });
                   }}
                   placeholder="e.g. CS2023-089 / ROLL-142"
-                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                  className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                     errors.studentId ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                   } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                 />
@@ -775,11 +775,11 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             </div>
           </div>
 
-          <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-6 border-t border-slate-800 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <button
               type="button"
               onClick={onCancel}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors"
+              className="px-5 py-2.5 rounded-sm bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors"
             >
               Cancel
             </button>
@@ -787,7 +787,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             <button
               type="submit"
               id="step1-continue-btn"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/25 transition-all flex items-center gap-2"
+              className="btn-pencil px-6 py-3.5 text-sm font-semibold flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <span>{event.teamBased ? 'Continue to Teammates Info' : 'Continue to Event Details'}</span>
               <ArrowRight className="w-4 h-4" />
@@ -798,9 +798,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
       {/* STEP 2: TEAMMATES INFO & DYNAMIC EVENT DETAILS */}
       {currentStep === 2 && (
-        <form onSubmit={handleNextStep2} className="bg-slate-900/80 rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-8 animate-in fade-in duration-200">
+        <form onSubmit={handleNextStep2} className="bg-slate-900/80 rounded-sm p-6 sm:p-8 border border-slate-800 shadow-xl space-y-8 animate-in fade-in duration-200">
           <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-xl font-display font-bold text-white flex items-center gap-2">
+            <h2 className="text-2xl font-display font-semibold uppercase tracking-wide text-white flex items-center gap-2">
               <Layers className="w-5 h-5 text-cyan-400" />
               <span>
                 Step 2: {event.teamBased ? 'Teammates & Event Information' : `${event.name} Specific Details`}
@@ -869,7 +869,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                   return (
                     <div
                       key={idx}
-                      className="p-5 sm:p-6 rounded-2xl bg-slate-950/90 border border-slate-800 relative space-y-4 hover:border-slate-700 transition-colors"
+                      className="p-5 sm:p-6 rounded-sm bg-slate-950/90 border border-slate-800 relative space-y-4 hover:border-slate-700 transition-colors"
                     >
                       {/* Teammate Header */}
                       <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-slate-800/80">
@@ -906,7 +906,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.name}
                             onChange={(e) => updateTeammateField(idx, 'name', e.target.value)}
                             placeholder={`e.g. Teammate ${memberNumber} Name`}
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               nameErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                           />
@@ -928,7 +928,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.email}
                             onChange={(e) => updateTeammateField(idx, 'email', e.target.value)}
                             placeholder="e.g. teammate@college.edu"
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               emailErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                           />
@@ -950,7 +950,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.rollNo}
                             onChange={(e) => updateTeammateField(idx, 'rollNo', e.target.value)}
                             placeholder="e.g. CS2023-092"
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               rollErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                           />
@@ -972,7 +972,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.department}
                             onChange={(e) => updateTeammateField(idx, 'department', e.target.value)}
                             placeholder="e.g. Information Technology"
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               deptErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                           />
@@ -994,7 +994,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.phone || ''}
                             onChange={(e) => updateTeammateField(idx, 'phone', e.target.value)}
                             placeholder="e.g. 9876543210"
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               phoneErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                           />
@@ -1014,7 +1014,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           <select
                             value={tm.year || '3rd Year'}
                             onChange={(e) => updateTeammateField(idx, 'year', e.target.value)}
-                            className={`w-full px-3.5 py-2 rounded-xl bg-slate-900 border ${
+                            className={`w-full px-3.5 py-2 rounded-sm bg-slate-900 border ${
                               yearErr ? 'border-red-500' : 'border-slate-800 focus:border-cyan-500'
                             } text-white focus:outline-none focus:ring-1`}
                           >
@@ -1042,7 +1042,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                             value={tm.college || ''}
                             onChange={(e) => updateTeammateField(idx, 'college', e.target.value)}
                             placeholder="e.g. Same as Leader or Custom College"
-                            className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 text-white placeholder:text-slate-600 focus:outline-none focus:ring-1"
+                            className="w-full px-3.5 py-2 rounded-sm bg-slate-900 border border-slate-800 focus:border-cyan-500 text-white placeholder:text-slate-600 focus:outline-none focus:ring-1"
                           />
                         </div>
 
@@ -1056,7 +1056,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           <select
                             value={tm.role || COMMON_ROLES[0]}
                             onChange={(e) => updateTeammateField(idx, 'role', e.target.value)}
-                            className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 text-white focus:outline-none focus:ring-1"
+                            className="w-full px-3.5 py-2 rounded-sm bg-slate-900 border border-slate-800 focus:border-cyan-500 text-white focus:outline-none focus:ring-1"
                           >
                             {COMMON_ROLES.map((role) => (
                               <option key={role} value={role}>
@@ -1107,9 +1107,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                         {field.options.map((opt) => (
                           <label
                             key={opt.value}
-                            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                            className={`flex items-center gap-3 p-3 rounded-sm border cursor-pointer transition-all ${
                               eventData[field.name] === opt.value
-                                ? 'bg-cyan-500/10 border-cyan-500 text-cyan-300'
+                                ? 'bg-fresh/10 border-fresh text-fresh'
                                 : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
                             }`}
                           >
@@ -1139,7 +1139,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           setEventData({ ...eventData, [field.name]: e.target.value });
                           if (fieldError) setErrors({ ...errors, [field.name]: '' });
                         }}
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                        className="w-full px-4 py-2.5 rounded-sm bg-slate-950 border border-slate-800 focus:border-cyan-500 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
                       >
                         {field.options.map((opt) => (
                           <option key={opt.value} value={opt.value}>
@@ -1160,7 +1160,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           if (fieldError) setErrors({ ...errors, [field.name]: '' });
                         }}
                         placeholder={field.placeholder}
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                        className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                           fieldError ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                         } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                       />
@@ -1177,7 +1177,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                           if (fieldError) setErrors({ ...errors, [field.name]: '' });
                         }}
                         placeholder={field.placeholder}
-                        className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border ${
+                        className={`w-full px-4 py-2.5 rounded-sm bg-slate-950 border ${
                           fieldError ? 'border-red-500/80 focus:ring-red-500' : 'border-slate-800 focus:border-cyan-500'
                         } text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-1`}
                       />
@@ -1205,11 +1205,11 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           </div>
           )}
 
-          <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-6 border-t border-slate-800 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setCurrentStep(1)}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-sm bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Step 1</span>
@@ -1218,7 +1218,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             <button
               type="submit"
               id="step2-continue-btn"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/25 transition-all flex items-center gap-2"
+              className="btn-pencil px-6 py-3.5 text-sm font-semibold flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <span>Review Information</span>
               <ArrowRight className="w-4 h-4" />
@@ -1229,9 +1229,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
       {/* STEP 3: REVIEW & SUBMIT */}
       {currentStep === 3 && (
-        <div className="bg-slate-900/80 rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6 animate-in fade-in duration-200">
+        <div className="bg-slate-900/80 rounded-sm p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6 animate-in fade-in duration-200">
           <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-xl font-display font-bold text-white flex items-center gap-2">
+            <h2 className="text-2xl font-display font-semibold uppercase tracking-wide text-white flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-cyan-400" />
               <span>Step 3: Review & Final Submission</span>
             </h2>
@@ -1242,7 +1242,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
           {/* If Team Event: Team Profile Header Card */}
           {event.teamBased && (
-            <div className="bg-slate-950/90 p-5 rounded-2xl border border-purple-500/30 space-y-3">
+            <div className="bg-slate-950/90 p-5 rounded-sm border border-purple-500/30 space-y-3">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-purple-400" />
@@ -1277,7 +1277,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           )}
 
           {/* Review Card: Team Leader or Participant Info */}
-          <div className="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-3">
+          <div className="bg-slate-950/70 p-5 rounded-sm border border-slate-800 space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
               <h3 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
                 {event.teamBased ? (
@@ -1328,7 +1328,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
           {/* If Team Event: Teammates Review Roster */}
           {event.teamBased && teammates.length > 0 && (
-            <div className="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-4">
+            <div className="bg-slate-950/70 p-5 rounded-sm border border-slate-800 space-y-4">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
                 <h3 className="text-xs font-mono font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-purple-400" />
@@ -1345,7 +1345,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {teammates.map((tm, idx) => (
-                  <div key={idx} className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs space-y-1.5">
+                  <div key={idx} className="p-3.5 rounded-sm bg-slate-900/60 border border-slate-800 text-xs space-y-1.5">
                     <div className="flex items-center justify-between">
                       <span className="font-mono font-bold text-slate-300">
                         Member {idx + 2}: {tm.name}
@@ -1380,7 +1380,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           )}
 
           {/* Review Card: Event Specifics */}
-          <div className="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-3">
+          <div className="bg-slate-950/70 p-5 rounded-sm border border-slate-800 space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
               <h3 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">
                 {event.name} Submission Specifics
@@ -1411,7 +1411,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
           {/* Submission Failure Alert Box if API Fails */}
           {submissionError && (
-            <div className="p-4 rounded-xl bg-red-950/40 border border-red-500/40 space-y-2">
+            <div className="p-4 rounded-sm bg-red-950/40 border border-red-500/40 space-y-2">
               <div className="flex items-center gap-2 text-red-400 font-bold text-sm">
                 <AlertCircle className="w-5 h-5 shrink-0" />
                 <span>Registration Submission Failed</span>
@@ -1432,16 +1432,16 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           )}
 
           {/* Agreement Notice */}
-          <div className="p-3.5 rounded-xl bg-slate-950/50 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+          <div className="p-3.5 rounded-sm bg-slate-950/50 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
             By submitting, I confirm that all participant {event.teamBased ? 'and teammate' : ''} details provided are accurate and the team agrees to adhere to the official rules and offline venue protocols for <span className="text-slate-200 font-semibold">{event.name}</span> during TechVision 2026.
           </div>
 
-          <div className="pt-6 border-t border-slate-800 flex items-center justify-between">
+          <div className="pt-6 border-t border-slate-800 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={() => setCurrentStep(2)}
-              className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-sm bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Step 2</span>
@@ -1452,11 +1452,11 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
               id="final-submit-btn"
               disabled={isSubmitting}
               onClick={handleFinalSubmit}
-              className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/30 transition-all flex items-center gap-2"
+              className="btn-pencil px-8 py-3.5 text-sm font-semibold disabled:opacity-50 flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
                   <span>Submitting Registration...</span>
                 </>
               ) : (

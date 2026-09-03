@@ -1,111 +1,81 @@
 import React from 'react';
-import { Lightbulb, Code2, Palette, Users, Sparkles, Trophy, CheckCircle } from 'lucide-react';
+import { Lightbulb, Code2, Palette, Users } from 'lucide-react';
+import { Reveal } from './Reveal';
+
+const NOTES = [
+  {
+    icon: Lightbulb,
+    title: 'Innovation with impact',
+    note: 'Tackle problem statements aligned with Smart India Hackathon 2026 and pitch working solutions to a real jury.',
+    ref: '// 01',
+  },
+  {
+    icon: Code2,
+    title: 'Technical depth',
+    note: 'From a 12-hour build marathon to a timed competitive programming contest — bring your best algorithmic game.',
+    ref: '// 02',
+  },
+  {
+    icon: Palette,
+    title: 'Communication & craft',
+    note: 'Turn complex ideas into AI-crafted posters and defend technical positions in a structured debate.',
+    ref: '// 03',
+  },
+  {
+    icon: Users,
+    title: 'Community & credentials',
+    note: 'Team up across departments, meet IIC mentors, and close the week at the Engineer’s Day awards.',
+    ref: '// 04',
+  },
+];
 
 export const WhyParticipate: React.FC = () => {
-  const points = [
-    {
-      icon: Lightbulb,
-      title: 'Innovation',
-      tagline: 'SIH & Real-World Impact',
-      description:
-        'Tackle national challenges aligned with the Smart India Hackathon 2026. Pitch direct engineering solutions to industry jury members and enterprise evaluators.',
-      accent: 'text-amber-400',
-      bgGlow: 'from-amber-500/10 to-transparent',
-      borderColor: 'group-hover:border-amber-500/40',
-      stat: 'SIH 2026 Ready',
-    },
-    {
-      icon: Code2,
-      title: 'Technical Skills',
-      tagline: 'Algorithmic & Systems Rigor',
-      description:
-        'Test your problem-solving depth in high-stakes environments—from 12-hour full-stack hackathons to time-constrained competitive programming challenges.',
-      accent: 'text-cyan-400',
-      bgGlow: 'from-cyan-500/10 to-transparent',
-      borderColor: 'group-hover:border-cyan-500/40',
-      stat: 'Hands-on Coding',
-    },
-    {
-      icon: Palette,
-      title: 'Creativity',
-      tagline: 'Design Thinking & Communication',
-      description:
-        'Express complex technical architectures through poster design and technical elocution. Learn to articulate engineering breakthroughs with clarity and visual punch.',
-      accent: 'text-emerald-400',
-      bgGlow: 'from-emerald-500/10 to-transparent',
-      borderColor: 'group-hover:border-emerald-500/40',
-      stat: 'Poster & Talks',
-    },
-    {
-      icon: Users,
-      title: 'Collaboration',
-      tagline: 'Cross-Disciplinary Synergy',
-      description:
-        'Form multidisciplinary engineering teams, connect with venture mentors, participate in IIC entrepreneurship camps, and celebrate engineering day together.',
-      accent: 'text-blue-400',
-      bgGlow: 'from-blue-500/10 to-transparent',
-      borderColor: 'group-hover:border-blue-500/40',
-      stat: 'IIC & E-Cell',
-    },
-  ];
-
   return (
-    <section id="why-participate-section" className="py-20 bg-slate-950 relative border-t border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-cyan-400 mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>VALUE PROPOSITION</span>
-          </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-tight mb-4">
-            Why Participate in Engineer’s Week?
-          </h2>
-          <p className="text-slate-400 text-base sm:text-lg">
-            Beyond regular academics—gain real competition exposure, build verified credentials, and win coveted engineering awards.
-          </p>
-        </div>
+    <section id="why-participate-section" className="relative py-20 sm:py-24 bg-paper border-t border-[rgba(147,197,253,0.14)]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16">
+          {/* Sticky intro column */}
+          <Reveal>
+            <div className="lg:sticky lg:top-28">
+              <div className="fig-tag mb-4">README.md</div>
+              <h2 className="font-display font-semibold uppercase text-4xl sm:text-5xl text-ink tracking-wide leading-[0.95] mb-5">
+                Why show up?
+              </h2>
+              <p className="text-mist text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+                Every repo ships a README. Ours lists four reasons this week is worth your September.
+              </p>
+              <p className="pencil-note text-2xl rotate-[-2deg] inline-block">
+                read these before you scroll ↓
+              </p>
+            </div>
+          </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {points.map((pt, idx) => {
-            const Icon = pt.icon;
-            return (
-              <div
-                key={pt.title}
-                className={`group relative bg-slate-900/60 rounded-2xl p-6 border border-slate-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${pt.borderColor} overflow-hidden flex flex-col justify-between`}
-              >
-                <div className={`absolute -top-12 -right-12 w-32 h-32 bg-gradient-to-br ${pt.bgGlow} rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-500`} />
-                
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-slate-800/90 border border-slate-700/60 flex items-center justify-center shadow-inner">
-                      <Icon className={`w-6 h-6 ${pt.accent}`} />
-                    </div>
-                    <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
-                      0{idx + 1}
+          {/* Notes list — numbered like a real notes block */}
+          <div>
+            {NOTES.map((n, idx) => {
+              const Icon = n.icon;
+              return (
+                <Reveal key={n.ref} delay={idx * 70}>
+                  <div className="group flex gap-5 sm:gap-7 py-7 border-b border-[rgba(147,197,253,0.14)] first:border-t">
+                    <span className="font-mono text-[11px] tracking-[0.16em] text-faint pt-1.5 shrink-0 w-16">
+                      {n.ref}
                     </span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon className="w-5 h-5 text-fresh group-hover:text-pencil transition-colors shrink-0" />
+                        <h3 className="font-display font-semibold text-2xl uppercase tracking-wide text-ink leading-none">
+                          {n.title}
+                        </h3>
+                      </div>
+                      <p className="text-mist text-sm sm:text-base leading-relaxed max-w-xl">
+                        {n.note}
+                      </p>
+                    </div>
                   </div>
-
-                  <h3 className="font-display font-bold text-xl text-white mb-1">
-                    {pt.title}
-                  </h3>
-                  <p className={`text-xs font-mono font-semibold ${pt.accent} mb-3`}>
-                    {pt.tagline}
-                  </p>
-                  <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                    {pt.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-                  <span className="flex items-center gap-1">
-                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Verified Badge</span>
-                  </span>
-                  <span className="font-mono text-slate-300 font-medium">{pt.stat}</span>
-                </div>
-              </div>
-            );
-          })}
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

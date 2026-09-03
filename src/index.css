@@ -1,73 +1,345 @@
 @import "tailwindcss";
 
+@theme {
+  /* ── Blueprint paper ─────────────────────────────────────────── */
+  --color-paper: #0a2240;
+  --color-paper-deep: #06172a;
+  --color-panel: #0d2a4c;
+  --color-panel-2: #123355;
+  --color-ink: #ecf3fd;
+  --color-mist: #9ab3cf;
+  --color-faint: #64809f;
+  --color-fresh: #7fd1ff;
+  --color-pencil: #ff5a34;
+  --color-pencil-deep: #e8401f;
+  --color-gold: #ffb84d;
+
+  /* Retune slate onto the blueprint so every surface sits on paper */
+  --color-slate-950: #06172a;
+  --color-slate-900: #0a2240;
+  --color-slate-850: #0d2a4c;
+  --color-slate-800: #14324f;
+  --color-slate-700: #1e4266;
+  --color-slate-600: #3a5f87;
+  --color-slate-500: #6e8db0;
+  --color-slate-400: #93aec9;
+  --color-slate-300: #c2d5ea;
+  --color-slate-200: #dce8f6;
+  --color-slate-100: #eaf2fc;
+  --color-slate-50: #f4f9ff;
+
+  --font-display: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-hand: "Caveat", cursive;
+}
+
 @layer base {
   :root {
-    --bg-dark: #050508;
-    --card-dark: #0a0a0f;
-    --card-hover: #121218;
-    --accent-cyan: #00D1FF;
-    --accent-blue: #2563EB;
-    --border-subtle: rgba(255, 255, 255, 0.08);
+    --line: rgba(147, 197, 253, 0.16);
+    --line-strong: rgba(147, 197, 253, 0.3);
   }
 
   body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #050508;
-    color: #f1f5f9;
+    font-family: var(--font-body);
+    background-color: #0a2240;
+    color: #ecf3fd;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, .font-display {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
   }
 
   code, pre, .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
+  }
+
+  .font-hand {
+    font-family: var(--font-hand);
+  }
+
+  ::selection {
+    background: #ff5a34;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff5a34;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-/* Custom engineering grid and dot background effects */
-.bg-grid-pattern {
-  background-size: 36px 36px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 209, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 209, 255, 0.04) 1px, transparent 1px);
+/* ── Blueprint grids ─────────────────────────────────────────────── */
+.bg-blueprint {
+  background-color: #0a2240;
+  background-image:
+    linear-gradient(to right, rgba(147, 197, 253, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(147, 197, 253, 0.055) 1px, transparent 1px),
+    linear-gradient(to right, rgba(147, 197, 253, 0.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(147, 197, 253, 0.13) 1px, transparent 1px);
+  background-size:
+    26px 26px,
+    26px 26px,
+    130px 130px,
+    130px 130px;
 }
 
-.bg-circuit-dots {
-  background-image: radial-gradient(rgba(0, 209, 255, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
+.bg-blueprint-fine {
+  background-image:
+    linear-gradient(to right, rgba(147, 197, 253, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(147, 197, 253, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
-.tech-glow {
-  box-shadow: 0 0 60px -12px rgba(0, 209, 255, 0.18);
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(147, 197, 253, 0.16) 0px,
+    rgba(147, 197, 253, 0.16) 1px,
+    transparent 1px,
+    transparent 7px
+  );
 }
 
-.glass-panel {
-  background: rgba(10, 10, 15, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.hatch-pencil {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 90, 52, 0.35) 0px,
+    rgba(255, 90, 52, 0.35) 1.5px,
+    transparent 1.5px,
+    transparent 8px
+  );
 }
 
-.glass-panel-hover:hover {
-  border-color: rgba(0, 209, 255, 0.4);
-  box-shadow: 0 12px 36px -10px rgba(0, 209, 255, 0.18);
+/* ── Sheet frame & corner ticks ──────────────────────────────────── */
+.sheet-frame {
+  position: relative;
+  border: 1px solid var(--line);
+  background: rgba(13, 42, 76, 0.55);
 }
 
-/* Custom scrollbar */
+.corner-ticks::before,
+.corner-ticks::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.corner-ticks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid #7fd1ff;
+  border-left: 2px solid #7fd1ff;
+}
+.corner-ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid #7fd1ff;
+  border-right: 2px solid #7fd1ff;
+}
+
+/* ── Section heading furniture ───────────────────────────────────── */
+.fig-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  color: #7fd1ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.fig-tag::before,
+.fig-tag::after {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* ── Dimension line (──┤ 185 m ├──) ─────────────────────────────── */
+.dim-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  color: #64809f;
+}
+.dim-line::before,
+.dim-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn-pencil {
+  background: #ff5a34;
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid #ff5a34;
+  transition: background 160ms ease, transform 120ms ease, box-shadow 160ms ease;
+  box-shadow: 0 10px 30px -12px rgba(255, 90, 52, 0.55);
+}
+.btn-pencil:hover {
+  background: #e8401f;
+  border-color: #e8401f;
+}
+.btn-pencil:active {
+  transform: translateY(1px);
+}
+
+.btn-ink {
+  background: #ecf3fd;
+  color: #0a2240;
+  font-weight: 600;
+  border: 1px solid #ecf3fd;
+  transition: background 160ms ease, transform 120ms ease;
+}
+.btn-ink:hover {
+  background: #ffffff;
+}
+.btn-ink:active {
+  transform: translateY(1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #ecf3fd;
+  border: 1px solid var(--line-strong);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.btn-outline:hover {
+  border-color: #7fd1ff;
+  background: rgba(127, 209, 255, 0.07);
+}
+
+/* ── Form fields ─────────────────────────────────────────────────── */
+.field-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border-radius: 2px;
+  background: #06172a;
+  border: 1px solid #1e4266;
+  color: #ecf3fd;
+  font-size: 0.875rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.field-input::placeholder {
+  color: #4a6484;
+}
+.field-input:focus {
+  outline: none;
+  border-color: #7fd1ff;
+  box-shadow: 0 0 0 1px #7fd1ff;
+}
+
+/* ── Scroll reveal ───────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 640ms cubic-bezier(0.22, 1, 0.36, 1), transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Self-drawing blueprint strokes ──────────────────────────────── */
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-stroke 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+
+.fade-late {
+  opacity: 0;
+  animation: fade-late-in 700ms ease forwards;
+}
+@keyframes fade-late-in {
+  to { opacity: 1; }
+}
+
+/* ── Pencil hand annotation ──────────────────────────────────────── */
+.pencil-note {
+  font-family: var(--font-hand);
+  color: #ff5a34;
+  line-height: 1.1;
+  user-select: none;
+}
+
+/* ── Modal / sheet motion ────────────────────────────────────────── */
+@keyframes sheet-up {
+  from { transform: translateY(48px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.sheet-up {
+  animation: sheet-up 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.overlay-in {
+  animation: overlay-in 200ms ease;
+}
+
+@keyframes drawer-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.drawer-in {
+  animation: drawer-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Poster carousel auto-progress ───────────────────────────────── */
+@keyframes poster-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.poster-progress {
+  animation: poster-progress 4.5s linear forwards;
+}
+
+/* ── Misc ────────────────────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #050508;
+  background: #06172a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1e26;
-  border-radius: 4px;
+  background: #1e4266;
+  border: 2px solid #06172a;
+  border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2d2d3a;
+  background: #2a5a8a;
 }
-

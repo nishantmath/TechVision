@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { 
-  X, 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  ArrowRight, 
-  Sparkles, 
-  FileText, 
-  ListChecks, 
+import React, { useEffect, useState } from 'react';
+import {
+  X,
+  Calendar,
+  Clock,
+  MapPin,
+  ArrowRight,
+  Sparkles,
+  FileText,
+  ListChecks,
   CheckCircle,
   Layers,
-  Grid
+  Grid,
+  Users,
+  User,
 } from 'lucide-react';
 import { EventConfig } from '../types';
 
@@ -20,110 +22,135 @@ interface EventDetailModalProps {
   onRegister: (slug: string) => void;
 }
 
+type TabKey = 'overview' | 'rules' | 'domains' | 'debate';
+
 export const EventDetailModal: React.FC<EventDetailModalProps> = ({
   event,
   onClose,
   onRegister,
 }) => {
+  const [activeTab, setActiveTab] = useState<TabKey>('overview');
+
+  // Reset tab whenever a new event is opened
+  useEffect(() => {
+    setActiveTab('overview');
+  }, [event?.slug]);
+
+  // Escape to close + body scroll lock
+  useEffect(() => {
+    if (!event) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [event, onClose]);
+
   if (!event) return null;
 
   const hasRules = Boolean(event.rules && event.rules.length > 0);
   const hasDomains = Boolean(event.challengeDomains && event.challengeDomains.length > 0);
   const hasDebateTopics = Boolean(event.debateTopics && event.debateTopics.length > 0);
 
-  // Available tabs based strictly on provided data
-  type TabKey = 'overview' | 'rules' | 'domains' | 'debate';
   const tabs: { key: TabKey; label: string }[] = [{ key: 'overview', label: 'Overview' }];
   if (hasRules) tabs.push({ key: 'rules', label: `Rules (${event.rules!.length})` });
-  if (hasDebateTopics) tabs.push({ key: 'debate', label: 'Debate Rounds & Topics' });
+  if (hasDebateTopics) tabs.push({ key: 'debate', label: 'Debate rounds' });
   if (hasDomains) tabs.push({ key: 'domains', label: `Domains (${event.challengeDomains!.length})` });
 
-  const [activeTab, setActiveTab] = useState<TabKey>('overview');
+  const sectionHeading = (icon: React.ReactNode, text: string) => (
+    <h3 className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-faint flex items-center gap-2 mb-3">
+      {icon}
+      <span>{text}</span>
+      <span className="flex-1 h-px bg-[rgba(147,197,253,0.14)]" />
+    </h3>
+  );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div 
-        className="relative w-full max-w-4xl bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl shadow-black/80 overflow-hidden flex flex-col max-h-[90vh]"
+    <div
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-6 bg-paper-deep/85 backdrop-blur-sm overlay-in"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${event.name} details`}
+    >
+      <div
+        className="sheet-up relative w-full sm:max-w-3xl lg:max-w-4xl bg-paper border-t sm:border border-[rgba(147,197,253,0.25)] shadow-2xl shadow-black/60 flex flex-col max-h-[94vh] sm:max-h-[88vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header Hero Bar */}
-        <div className={`relative px-6 sm:px-8 pt-8 pb-6 bg-gradient-to-r ${event.themeColor} border-b border-slate-800`}>
+        {/* Mobile grabber */}
+        <div className="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0" onClick={onClose}>
+          <span className="w-10 h-1 bg-slate-600 rounded-full" />
+        </div>
+
+        {/* Header */}
+        <div className="relative px-5 sm:px-8 pt-5 sm:pt-7 pb-5 border-b border-[rgba(147,197,253,0.18)] shrink-0 bg-blueprint-fine">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-slate-950/60 hover:bg-slate-950 text-slate-400 hover:text-white transition-colors focus:outline-none"
-            aria-label="Close modal"
+            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 border border-[rgba(147,197,253,0.25)] text-mist hover:text-ink hover:border-fresh transition-colors"
+            aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
 
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className="font-mono text-xs font-bold text-cyan-400 bg-slate-950/80 px-2.5 py-1 rounded border border-cyan-500/30">
-              EVENT {event.number}
+          <div className="flex flex-wrap items-center gap-2 mb-3 pr-10 font-mono text-[10px] tracking-[0.14em] uppercase">
+            <span className="text-fresh border border-fresh/40 px-2 py-1">E-{event.number}</span>
+            <span className="text-mist border border-[rgba(147,197,253,0.25)] px-2 py-1 flex items-center gap-1.5">
+              {event.teamBased ? <Users className="w-3 h-3" /> : <User className="w-3 h-3" />}
+              {event.teamBased
+                ? event.minTeamSize === event.maxTeamSize
+                  ? `Team · exactly ${event.minTeamSize}`
+                  : `Team · ${event.minTeamSize}–${event.maxTeamSize}`
+                : 'Solo'}
             </span>
-            <span className={`font-mono text-xs font-semibold px-2.5 py-1 rounded border ${
-              event.teamBased 
-                ? 'bg-purple-950/80 text-purple-300 border-purple-500/30' 
-                : 'bg-teal-950/80 text-teal-300 border-teal-500/30'
-            }`}>
-              {event.teamBased 
-                ? (event.minTeamSize === event.maxTeamSize 
-                    ? `👥 TEAM (EXACTLY ${event.minTeamSize} MEMBERS)` 
-                    : `👥 TEAM (${event.minTeamSize}–${event.maxTeamSize} MEMBERS)`)
-                : '👤 SOLO PARTICIPATION'}
-            </span>
-            <span className="font-mono text-xs font-semibold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-500/30">
-              {event.mode.toUpperCase()}
+            <span className="text-mist border border-[rgba(147,197,253,0.25)] px-2 py-1">
+              {event.mode}
             </span>
             {event.theme && (
-              <span className="font-mono text-xs font-semibold text-amber-300 bg-amber-950/60 px-2.5 py-1 rounded border border-amber-500/30">
-                THEME: {event.theme}
-              </span>
+              <span className="text-gold border border-gold/40 px-2 py-1">Theme: {event.theme}</span>
             )}
           </div>
 
-          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white">
+          <h2 className="font-display font-semibold uppercase text-3xl sm:text-4xl text-ink tracking-wide leading-[0.95]">
             {event.name}
           </h2>
-          <p className="text-sm sm:text-base font-mono text-cyan-300 mt-1">
+          <p className="font-mono text-xs text-pencil uppercase tracking-[0.16em] mt-1.5">
             {event.subtitle}
           </p>
 
-          {/* Quick Details Row - ONLY showing provided values */}
-          <div className="flex flex-wrap gap-2.5 mt-6 pt-4 border-t border-slate-800/60 font-mono text-xs text-slate-200">
-            <div className="flex items-center gap-2 bg-slate-950/60 px-3 py-2 rounded-xl border border-slate-800">
-              <Calendar className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>{event.formattedDate}</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/60 px-3 py-2 rounded-xl border border-slate-800">
-              <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>{event.time}</span>
-            </div>
+          {/* Quick spec chips */}
+          <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 font-mono text-[11px] text-mist">
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-fresh" /> {event.formattedDate}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-fresh" /> {event.time}
+            </span>
             {event.reportingTime && (
-              <div className="flex items-center gap-2 bg-amber-950/50 px-3 py-2 rounded-xl border border-amber-500/30 text-amber-300">
-                <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Reporting: {event.reportingTime}</span>
-              </div>
+              <span className="flex items-center gap-1.5 text-gold">
+                <Clock className="w-3.5 h-3.5" /> Report {event.reportingTime}
+              </span>
             )}
-            {event.venue && (
-              <div className="flex items-center gap-2 bg-slate-950/60 px-3 py-2 rounded-xl border border-slate-800">
-                <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Venue: {event.venue}</span>
-              </div>
-            )}
+            <span className="flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-fresh" /> {event.venue || 'Venue TBA'}
+            </span>
           </div>
         </div>
 
-        {/* Modal Navigation Tabs (Only rendered if more than 1 tab exists) */}
+        {/* Tabs */}
         {tabs.length > 1 && (
-          <div className="flex items-center gap-2 px-6 sm:px-8 border-b border-slate-800 bg-slate-950/60 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 px-4 sm:px-6 border-b border-[rgba(147,197,253,0.18)] overflow-x-auto no-scrollbar shrink-0">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`py-3 px-4 text-xs font-mono font-medium border-b-2 transition-all whitespace-nowrap ${
+                className={`py-3 px-3.5 font-mono text-[11px] uppercase tracking-[0.12em] border-b-2 -mb-px transition-colors whitespace-nowrap ${
                   activeTab === tab.key
-                    ? 'border-cyan-400 text-cyan-400 font-semibold'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-pencil text-ink'
+                    : 'border-transparent text-faint hover:text-mist'
                 }`}
               >
                 {tab.label}
@@ -132,110 +159,123 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
         )}
 
-        {/* Content Body (Scrollable) */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1 text-slate-300 text-sm">
-          {/* TAB: OVERVIEW */}
+        {/* Body */}
+        <div className="px-5 sm:px-8 py-6 overflow-y-auto flex-1 text-sm">
           {activeTab === 'overview' && (
-            <div className="space-y-6 animate-in fade-in duration-150">
-              {/* Event Description if provided */}
+            <div className="space-y-7">
               {event.fullDescription ? (
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2 mb-2">
-                    <Sparkles className="w-4 h-4 text-cyan-400" />
-                    <span>About the Event</span>
-                  </h3>
-                  <p className="leading-relaxed text-slate-200 text-sm sm:text-base bg-slate-950/50 p-4 rounded-xl border border-slate-800">
-                    {event.fullDescription}
-                  </p>
+                  {sectionHeading(<Sparkles className="w-3.5 h-3.5 text-fresh" />, 'About this event')}
+                  <p className="text-mist leading-relaxed">{event.fullDescription}</p>
                 </div>
               ) : (
-                <div className="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-6 text-center space-y-2">
-                  <FileText className="w-8 h-8 text-cyan-400/80 mx-auto mb-2" />
-                  <h4 className="text-white font-display font-semibold text-base">
-                    Official Event Details
+                <div className="sheet-frame p-6 text-center">
+                  <FileText className="w-7 h-7 text-fresh mx-auto mb-2" />
+                  <h4 className="font-display font-semibold uppercase text-lg text-ink tracking-wide">
+                    Spec pending issue
                   </h4>
-                  <p className="text-slate-400 text-xs sm:text-sm max-w-md mx-auto">
-                    Official event details, problem sets, and guidelines will be updated when the official document is provided.
+                  <p className="text-faint text-xs mt-1 max-w-sm mx-auto">
+                    Full details and guidelines for this event will be published as soon as the committee issues them.
                   </p>
                 </div>
               )}
 
-              {/* Debate Specifics if present */}
               {(event.targetParticipants || event.topicTrack || event.positionsInfo) && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {event.targetParticipants && (
-                    <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-                      <span className="text-[11px] font-mono text-cyan-400 block mb-1">TARGET PARTICIPANTS</span>
-                      <p className="text-xs text-white font-medium">{event.targetParticipants}</p>
+                    <div className="sheet-frame p-4">
+                      <span className="font-mono text-[10px] tracking-[0.16em] text-faint uppercase block mb-1">Who it's for</span>
+                      <p className="text-ink text-xs font-medium">{event.targetParticipants}</p>
                     </div>
                   )}
                   {event.recommendedCapacity && (
-                    <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-                      <span className="text-[11px] font-mono text-cyan-400 block mb-1">CAPACITY</span>
-                      <p className="text-xs text-white font-medium">
+                    <div className="sheet-frame p-4">
+                      <span className="font-mono text-[10px] tracking-[0.16em] text-faint uppercase block mb-1">Capacity</span>
+                      <p className="text-ink text-xs font-medium">
                         {event.recommendedCapacity} {event.scalableCapacity && `(${event.scalableCapacity})`}
                       </p>
                     </div>
                   )}
                   {event.topicTrack && (
-                    <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 sm:col-span-2">
-                      <span className="text-[11px] font-mono text-cyan-400 block mb-1">TOPIC TRACK</span>
-                      <p className="text-xs text-white font-semibold">{event.topicTrack}</p>
-                      {event.positionsInfo && (
-                        <p className="text-[11px] text-slate-400 mt-1">{event.positionsInfo}</p>
-                      )}
+                    <div className="sheet-frame p-4 sm:col-span-2">
+                      <span className="font-mono text-[10px] tracking-[0.16em] text-faint uppercase block mb-1">Topic track</span>
+                      <p className="text-ink text-xs font-semibold">{event.topicTrack}</p>
+                      {event.positionsInfo && <p className="text-faint text-[11px] mt-1">{event.positionsInfo}</p>}
                     </div>
                   )}
                 </div>
               )}
 
-              {/* Poster Guidelines if provided */}
               {event.posterGuidelines && event.posterGuidelines.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2 mb-3">
-                    <Layers className="w-4 h-4 text-cyan-400" />
-                    <span>The Poster Should Communicate</span>
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {sectionHeading(<Layers className="w-3.5 h-3.5 text-fresh" />, 'The poster should communicate')}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {event.posterGuidelines.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800">
-                        <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <span className="text-xs text-slate-200">{item}</span>
+                      <div key={idx} className="flex items-center gap-2.5 sheet-frame px-3.5 py-2.5">
+                        <CheckCircle className="w-4 h-4 text-fresh shrink-0" />
+                        <span className="text-xs text-mist">{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Solution Components for Hackathon if provided */}
               {event.solutionIncludes && event.solutionIncludes.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2 mb-3">
-                    <Layers className="w-4 h-4 text-cyan-400" />
-                    <span>Solution Should Include</span>
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {sectionHeading(<Layers className="w-3.5 h-3.5 text-fresh" />, 'Solution should include')}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {event.solutionIncludes.map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800">
-                        <CheckCircle className="w-4 h-4 text-cyan-400 shrink-0" />
-                        <span className="text-xs text-slate-200">{item}</span>
+                      <div key={idx} className="flex items-center gap-2.5 sheet-frame px-3.5 py-2.5">
+                        <CheckCircle className="w-4 h-4 text-fresh shrink-0" />
+                        <span className="text-xs text-mist">{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Eligibility if provided */}
+              {event.schedule && event.schedule.length > 0 && (
+                <div>
+                  {sectionHeading(<Clock className="w-3.5 h-3.5 text-fresh" />, 'Run of show')}
+                  <div className="font-mono text-xs">
+                    {event.schedule.map((s, i) => (
+                      <div key={i} className="flex items-center justify-between gap-4 py-2 border-b border-[rgba(147,197,253,0.12)] first:border-t">
+                        <span className="text-fresh shrink-0">{s.time}</span>
+                        <span className="text-mist text-right">{s.activity}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {event.coordinators && event.coordinators.length > 0 && (
+                <div>
+                  {sectionHeading(<Users className="w-3.5 h-3.5 text-fresh" />, 'Points of contact')}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {event.coordinators.map((person) => (
+                      <div key={person.name} className="sheet-frame px-4 py-3 flex items-center gap-3">
+                        <div className="w-9 h-9 border border-fresh/50 flex items-center justify-center font-display font-semibold text-sm text-fresh shrink-0">
+                          {person.name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <div className="text-ink text-sm font-semibold leading-tight">{person.name}</div>
+                          <div className="font-mono text-[9px] tracking-[0.14em] text-faint uppercase mt-0.5">
+                            {person.role}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {event.eligibility && event.eligibility.length > 0 && (
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2 mb-2">
-                    <CheckCircle className="w-4 h-4 text-emerald-400" />
-                    <span>Eligibility</span>
-                  </h3>
+                  {sectionHeading(<CheckCircle className="w-3.5 h-3.5 text-fresh" />, 'Eligibility')}
                   <ul className="space-y-2">
                     {event.eligibility.map((el, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs text-slate-200 bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/80">
-                        <span className="text-emerald-400 font-mono">•</span>
+                      <li key={i} className="flex items-start gap-2.5 text-xs text-mist sheet-frame px-3.5 py-2.5">
+                        <span className="text-pencil font-mono font-bold">•</span>
                         <span>{el}</span>
                       </li>
                     ))}
@@ -245,77 +285,50 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB: RULES */}
           {activeTab === 'rules' && hasRules && (
-            <div className="space-y-4 animate-in fade-in duration-150">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2 mb-3">
-                <ListChecks className="w-4 h-4 text-cyan-400" />
-                <span>Official Rules</span>
-              </h3>
-              <div className="space-y-2.5">
-                {event.rules!.map((rule, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
-                    <span className="font-mono text-xs font-bold text-cyan-400 bg-slate-900 border border-cyan-500/30 px-2 py-0.5 rounded shrink-0">
-                      Rule {i + 1}
-                    </span>
-                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">{rule}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="space-y-2.5">
+              {sectionHeading(<ListChecks className="w-3.5 h-3.5 text-fresh" />, 'Official rules')}
+              {event.rules!.map((rule, i) => (
+                <div key={i} className="flex items-start gap-3.5 sheet-frame px-4 py-3">
+                  <span className="font-mono text-[10px] font-bold text-fresh border border-fresh/40 px-1.5 py-0.5 shrink-0">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-xs sm:text-sm text-mist leading-relaxed">{rule}</p>
+                </div>
+              ))}
             </div>
           )}
 
-          {/* TAB: DEBATE ROUNDS */}
           {activeTab === 'debate' && hasDebateTopics && (
-            <div className="space-y-4 animate-in fade-in duration-150">
-              <div className="p-4 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-cyan-200 space-y-1 font-mono">
-                <p><strong>Topic Track:</strong> {event.topicTrack}</p>
-                <p><strong>Progression:</strong> From approachable topics to technical and analytical reasoning, culminating in complex questions on technology, ethics, accountability and the future.</p>
-                <p><strong>Sides Allocation:</strong> Teams receive FOR or AGAINST positions through a transparent random draw by organizers.</p>
+            <div className="space-y-4">
+              <div className="sheet-frame p-4 text-xs text-mist space-y-1 font-mono border-l-2 border-l-pencil">
+                <p><strong className="text-ink">Track:</strong> {event.topicTrack}</p>
+                <p><strong className="text-ink">Sides:</strong> FOR / AGAINST assigned by transparent random draw.</p>
               </div>
-
-              <div className="space-y-3 pt-2">
-                {event.debateTopics!.map((roundItem, idx) => (
-                  <div key={idx} className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-950/60 px-2.5 py-1 rounded border border-cyan-500/30">
-                        {roundItem.round}
-                      </span>
-                      <span className="text-xs font-mono text-slate-400">
-                        {roundItem.title}
-                      </span>
-                    </div>
-                    <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
-                      <p className="text-xs text-slate-400 font-mono mb-1">Debate Topic:</p>
-                      <p className="text-sm font-semibold text-white italic">
-                        "{roundItem.topic}"
-                      </p>
-                    </div>
+              {event.debateTopics!.map((roundItem, idx) => (
+                <div key={idx} className="sheet-frame p-4 space-y-2.5">
+                  <div className="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-[0.14em]">
+                    <span className="text-fresh border border-fresh/40 px-2 py-0.5">{roundItem.round}</span>
+                    <span className="text-faint">{roundItem.title}</span>
                   </div>
-                ))}
-              </div>
+                  <p className="text-sm font-semibold text-ink leading-relaxed">
+                    “{roundItem.topic}”
+                  </p>
+                </div>
+              ))}
             </div>
           )}
 
-          {/* TAB: DOMAINS */}
           {activeTab === 'domains' && hasDomains && (
-            <div className="space-y-4 animate-in fade-in duration-150">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 font-mono flex items-center gap-2">
-                  <Grid className="w-4 h-4 text-cyan-400" />
-                  <span>Available Challenge Domains</span>
-                </h3>
-                <span className="text-xs font-mono text-cyan-400">
-                  {event.challengeDomains!.length} Domains
-                </span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="space-y-4">
+              {sectionHeading(<Grid className="w-3.5 h-3.5 text-fresh" />, `${event.challengeDomains!.length} challenge domains`)}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {event.challengeDomains!.map((domain, idx) => (
-                  <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-slate-950/60 border border-slate-800">
-                    <span className="text-xs font-mono text-cyan-400 font-bold w-6 shrink-0">
-                      {String(idx + 1).padStart(2, '0')}.
+                  <div key={idx} className="flex items-center gap-3 sheet-frame px-3.5 py-2.5">
+                    <span className="font-mono text-[10px] text-pencil font-bold w-6 shrink-0">
+                      {String(idx + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-xs text-slate-200 font-medium">{domain}</span>
+                    <span className="text-xs text-mist font-medium">{domain}</span>
                   </div>
                 ))}
               </div>
@@ -323,27 +336,30 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           )}
         </div>
 
-        {/* Footer Actions */}
-        <div className="p-4 sm:p-6 bg-slate-950 border-t border-slate-800 flex items-center justify-between gap-4">
+        {/* Footer */}
+        <div className="shrink-0 px-5 sm:px-8 py-4 bg-paper-deep border-t border-[rgba(147,197,253,0.18)] flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors"
+            className="btn-outline px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em]"
           >
             Close
           </button>
-
-          {!event.noRegistrationRequired && (
-          <button
-            id={`modal-register-${event.slug}`}
-            onClick={() => {
-              onClose();
-              onRegister(event.slug);
-            }}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all flex items-center gap-2"
-          >
-            <span>Register for this Event</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {!event.noRegistrationRequired ? (
+            <button
+              id={`modal-register-${event.slug}`}
+              onClick={() => {
+                onClose();
+                onRegister(event.slug);
+              }}
+              className="btn-pencil px-6 py-3 text-sm flex items-center gap-2"
+            >
+              <span>Register for this event</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <span className="font-mono text-[11px] text-fresh uppercase tracking-[0.14em] py-3">
+              Open to all — just show up
+            </span>
           )}
         </div>
       </div>

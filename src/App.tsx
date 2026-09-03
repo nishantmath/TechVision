@@ -6,6 +6,9 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { WhyParticipate } from './components/WhyParticipate';
+import { Coordinators } from './components/Coordinators';
+import { Posters } from './components/Posters';
 import { EventsList } from './components/EventsList';
 import { EventTimeline } from './components/EventTimeline';
 import { EventDetailModal } from './components/EventDetailModal';
@@ -124,7 +127,7 @@ export default function App() {
   const currentRegistrationEvent = getEventBySlug(selectedEventSlug) || EVENTS_DATA[0];
 
   return (
-    <div className="min-h-screen bg-[#050508] text-slate-100 flex flex-col selection:bg-[#00D1FF] selection:text-slate-950">
+    <div className="min-h-screen bg-paper text-ink flex flex-col">
       {/* Navigation */}
       <Navbar
         currentView={currentView}
@@ -147,6 +150,15 @@ export default function App() {
               onSelectEvent={handleOpenDetailModal}
               onRegisterEvent={handleStartRegistration}
             />
+
+            {/* General Notes / Why Participate */}
+            <WhyParticipate />
+
+            {/* Event Coordinators */}
+            <Coordinators />
+
+            {/* Poster Gallery */}
+            <Posters />
           </>
         )}
 

@@ -66,7 +66,10 @@ export const EVENTS_DATA: EventConfig[] = [
     ],
     // Kept empty - not provided
     venue: '',
-    coordinators: [],
+    coordinators: [
+      { name: 'Govind', role: 'Event Coordinator' },
+      { name: 'Gauri', role: 'Event Coordinator' },
+    ],
     schedule: [],
     requirements: [],
     format: [],
@@ -133,7 +136,10 @@ export const EVENTS_DATA: EventConfig[] = [
     ],
     // Kept empty - not provided
     venue: '',
-    coordinators: [],
+    coordinators: [
+      { name: 'Bhavya Shree', role: 'Event Coordinator' },
+      { name: 'Dev', role: 'Event Coordinator' },
+    ],
     schedule: [],
     requirements: [],
     format: [
@@ -300,7 +306,10 @@ export const EVENTS_DATA: EventConfig[] = [
       { time: '4:30 PM – 5:00 PM', activity: 'Evaluation, Results & Closing' },
     ],
     requirements: [],
-    coordinators: [],
+    coordinators: [
+      { name: 'Nishant', role: 'Event Coordinator' },
+      { name: 'Chitti', role: 'Event Coordinator' },
+    ],
     fields: [],
   },
   {
@@ -327,7 +336,10 @@ export const EVENTS_DATA: EventConfig[] = [
     eligibility: [],
     requirements: [],
     schedule: [],
-    coordinators: [],
+    coordinators: [
+      { name: 'Chetna', role: 'Event Coordinator' },
+      { name: 'Tarun', role: 'Event Coordinator' },
+    ],
     format: [],
     fields: [
       {

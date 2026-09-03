@@ -1,5 +1,4 @@
 import React from 'react';
-import { Cpu, ShieldCheck } from 'lucide-react';
 import { EVENTS_DATA } from '../data/events';
 
 interface FooterProps {
@@ -9,88 +8,80 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onSelectEvent }) => {
   return (
-    <footer className="bg-[#050508] border-t border-slate-800/80 text-slate-400 text-xs relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Brand & Vision */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 p-[1px] shadow-md shadow-cyan-500/20">
-                <div className="w-full h-full bg-[#050508] rounded-lg flex items-center justify-center">
-                  <Cpu className="w-5 h-5 text-cyan-400" />
-                </div>
+    <footer className="bg-paper-deep border-t border-[rgba(147,197,253,0.14)]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-14 mb-12">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative w-9 h-9 border-2 border-fresh flex items-center justify-center shrink-0">
+                <span className="font-display font-bold text-sm text-fresh leading-none">TV</span>
+                <span className="absolute -top-[5px] -left-[5px] w-2 h-2 border-t-2 border-l-2 border-pencil" />
+                <span className="absolute -bottom-[5px] -right-[5px] w-2 h-2 border-b-2 border-r-2 border-pencil" />
               </div>
-              <span className="font-display font-bold text-lg text-white tracking-tight">
-                TECHVISION 2026
+              <span className="font-display font-semibold text-2xl uppercase tracking-[0.08em] text-ink">
+                TechVision 2026
               </span>
             </div>
-
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Innovate. Compete. Create. Inspire. Engineer’s Week celebration of technical excellence, student invention, and Smart India Hackathon incubation.
+            <p className="text-mist text-sm leading-relaxed max-w-sm mb-5">
+              Innovate. Compete. Create. Inspire. One week of code, circuits and ideas,
+              shipped by the Engineer’s Week Organizing Committee.
             </p>
-
-            <div className="flex items-center gap-4 text-slate-500 font-mono text-[11px]">
-              <span>TECHVISION 2026 • SEP 08 – 15</span>
-              <span>•</span>
-              <span>CAMPUS VENUES</span>
-            </div>
+            <p className="pencil-note text-xl rotate-[-1.5deg]">lgtm — ship it ✓</p>
           </div>
 
-          {/* Quick Links */}
+          {/* Events index */}
           <div>
-            <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Navigation
-            </h4>
-            <ul className="space-y-2.5">
-              <li>
-                <button
-                  onClick={() => onNavigate('home')}
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  Home Portal
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('events')}
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  All 6 Competitions
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* All 6 Events Direct Links */}
-          <div className="lg:col-span-2">
-            <h4 className="font-mono text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Events Directory
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <h4 className="fig-tag mb-5">Index of events</h4>
+            <div className="font-mono text-xs">
               {EVENTS_DATA.map((e) => (
                 <button
                   key={e.slug}
                   onClick={() => onSelectEvent(e.slug)}
-                  className="text-left p-2 rounded-lg bg-slate-900/60 hover:bg-slate-850 border border-slate-800/80 text-slate-300 hover:text-cyan-300 transition-all text-[11px] group"
+                  className="w-full flex items-baseline justify-between gap-3 py-2.5 border-b border-[rgba(147,197,253,0.12)] first:border-t text-left group"
                 >
-                  <div className="font-mono text-[10px] text-cyan-400 font-semibold">{e.number} • {e.name}</div>
-                  <div className="text-slate-500 group-hover:text-slate-400 truncate text-[10px]">{e.subtitle}</div>
+                  <span className="flex items-baseline gap-3 min-w-0">
+                    <span className="text-pencil shrink-0">{e.number}</span>
+                    <span className="text-mist group-hover:text-ink transition-colors truncate">
+                      {e.name}
+                    </span>
+                  </span>
+                  <span className="text-faint text-[10px] tracking-[0.12em] uppercase shrink-0">
+                    {e.formattedDate.replace(' September 2026', ' Sep')}
+                  </span>
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom copyright */}
-        <div className="mt-12 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 font-mono">
-          <div>
-            © 2026 Engineer’s Week Organizing Committee. All rights reserved.
+        {/* Title block */}
+        <div className="border border-[rgba(147,197,253,0.25)] font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.14em]">
+          <div className="grid grid-cols-2 sm:grid-cols-4">
+            <div className="px-3.5 py-3 border-b sm:border-b-0 border-r border-[rgba(147,197,253,0.25)]">
+              <span className="text-faint block mb-1">Project</span>
+              <span className="text-ink">TechVision ’26</span>
+            </div>
+            <div className="px-3.5 py-3 border-b sm:border-b-0 sm:border-r border-[rgba(147,197,253,0.25)]">
+              <span className="text-faint block mb-1">Maintainers</span>
+              <span className="text-ink">Cluster One</span>
+            </div>
+            <div className="px-3.5 py-3 border-r border-[rgba(147,197,253,0.25)]">
+              <span className="text-faint block mb-1">Dates</span>
+              <span className="text-ink">08–15 Sep 2026</span>
+            </div>
+            <div className="px-3.5 py-3">
+              <span className="text-faint block mb-1">Build</span>
+              <span className="text-ink">v2026.09.08 · stable</span>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1 text-slate-400">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Official Event Registration Portal</span>
-            </span>
+        </div>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[10px] tracking-[0.14em] uppercase text-faint">
+          <span>© 2026 Engineer’s Week Organizing Committee</span>
+          <div className="flex items-center gap-5">
+            <button onClick={() => onNavigate('home')} className="hover:text-fresh transition-colors">Home</button>
+            <button onClick={() => onNavigate('events')} className="hover:text-fresh transition-colors">Events</button>
           </div>
         </div>
       </div>

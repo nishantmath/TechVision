@@ -639,6 +639,34 @@ function setupSheetsIfMissing(ss) {
   res.send(appsScript);
 });
 
+// Posters gallery: any image dropped into public/poster shows up automatically
+const POSTER_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif'];
+const PUBLIC_POSTER_DIR = path.join(process.cwd(), 'public', 'poster');
+
+app.use('/poster', express.static(PUBLIC_POSTER_DIR));
+
+app.get('/api/posters', (req: Request, res: Response) => {
+  try {
+    const dirs = [PUBLIC_POSTER_DIR, path.join(process.cwd(), 'dist', 'poster')];
+    for (const dir of dirs) {
+      if (fs.existsSync(dir)) {
+        const files = fs
+          .readdirSync(dir)
+          .filter((f) => POSTER_EXTS.includes(path.extname(f).toLowerCase()))
+          .sort();
+        if (files.length > 0) {
+          res.json({ posters: files.map((f) => `/poster/${encodeURIComponent(f)}`) });
+          return;
+        }
+      }
+    }
+    res.json({ posters: [] });
+  } catch (err) {
+    console.error('Poster list error:', err);
+    res.json({ posters: [] });
+  }
+});
+
 // Vite & Static file serving
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
