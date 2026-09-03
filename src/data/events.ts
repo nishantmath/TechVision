@@ -8,9 +8,9 @@ export const EVENTS_DATA: EventConfig[] = [
     subtitle: 'Challenge. Create. Innovate.',
     tagline: 'Transform innovative ideas into visually powerful AI-created posters',
     shortDescription:
-      'An AI-powered poster creation challenge where teams of exactly 3 members use creativity and Artificial Intelligence to transform innovative ideas into visually powerful posters communicating meaningful problems, solutions, and impact.',
+      'An AI-powered poster creation challenge where participants use creativity and Artificial Intelligence to transform innovative ideas into visually powerful posters communicating meaningful problems, solutions, and impact.',
     fullDescription:
-      'An AI-powered poster creation challenge where teams use creativity and Artificial Intelligence to transform innovative ideas into visually powerful posters. Each team selects a domain and creates a poster communicating a meaningful problem, an innovative solution and its potential impact.',
+      'An AI-powered poster creation challenge where participants use creativity and Artificial Intelligence to transform innovative ideas into visually powerful posters. Each participant selects a domain and creates a poster communicating a meaningful problem, an innovative solution and its potential impact.',
     date: '2026-09-08',
     formattedDate: '08 September 2026',
     time: '2:00 PM – 5:00 PM',
@@ -18,17 +18,17 @@ export const EVENTS_DATA: EventConfig[] = [
     themeColor: 'from-amber-500/20 to-orange-500/10',
     accentColor: 'text-amber-400 border-amber-500/30',
     badge: 'AI Poster Challenge',
-    teamBased: true,
-    minTeamSize: 3,
-    maxTeamSize: 3,
+    teamBased: false,
+    minTeamSize: 1,
+    maxTeamSize: 1,
     rules: [
-      'Each team must have exactly 3 members.',
+      'Individual participation — each participant creates their own poster.',
       'Posters must be created during the official competition duration.',
       'Pre-made or previously created posters are not allowed.',
       'AI-powered tools may be used to generate visuals, concepts, layouts and creative elements.',
       'Participants must bring their own laptops and charging accessories.',
       'Plagiarism or direct copying may lead to disqualification.',
-      'Teams may be asked to explain their idea, poster concept and AI usage.',
+      'Participants may be asked to explain their idea, poster concept and AI usage.',
       'Final poster must be submitted within the time limit.',
       'Offensive or inappropriate content is not permitted.',
       'Judges\' and organizing committee\'s decision is final.',
@@ -74,7 +74,8 @@ export const EVENTS_DATA: EventConfig[] = [
     requirements: [],
     format: [],
     eligibility: [
-      'Team participation: Exactly 3 members (No more, no less)',
+      'Individual participation — no teams',
+      'Open to all engineering students of S-VYASA University',
     ],
     fields: [],
   },
@@ -96,14 +97,14 @@ export const EVENTS_DATA: EventConfig[] = [
     themeColor: 'from-emerald-500/20 to-teal-500/10',
     accentColor: 'text-emerald-400 border-emerald-500/30',
     badge: 'Technical Debate',
-    teamBased: true,
-    minTeamSize: 4,
-    maxTeamSize: 4,
+    teamBased: false,
+    minTeamSize: 1,
+    maxTeamSize: 1,
     targetParticipants: 'Freshers and junior engineering students',
     recommendedCapacity: '24–30 participants',
     scalableCapacity: 'Up to 50 participants',
     topicTrack: 'AI & The Future Engineer',
-    positionsInfo: 'Teams receive FOR or AGAINST positions through a transparent random draw by organizers.',
+    positionsInfo: 'Participants receive FOR or AGAINST positions through a transparent random draw by organizers.',
     debateTopics: [
       {
         round: 'Round 1',
@@ -122,9 +123,8 @@ export const EVENTS_DATA: EventConfig[] = [
       },
     ],
     rules: [
-      'Teams consist of exactly 4 members.',
-      'Every team member must actively participate.',
-      'Teams receive FOR or AGAINST positions through a transparent random draw.',
+      'Individual participation — each participant debates independently.',
+      'Participants receive FOR or AGAINST positions through a transparent random draw.',
       'Participants are judged on reasoning quality, not on whether judges agree with their assigned viewpoint.',
       'Respectful disagreement is mandatory.',
       'No personal attacks or offensive language.',
@@ -143,14 +143,14 @@ export const EVENTS_DATA: EventConfig[] = [
     schedule: [],
     requirements: [],
     format: [
-      'Format: Team Competition (Exactly 4 members)',
+      'Individual participation',
       'Topic Track: AI & The Future Engineer',
       'Progression: 3 Progressive Rounds (Comfort Zone Breaker → Engineering Reality Check → Grand Finale)',
       'Positions: Assigned via transparent random draw (FOR or AGAINST)',
     ],
     eligibility: [
       'Target Participants: Freshers and junior engineering students',
-      'Team Size: Exactly 4 members',
+      'Individual participation — no teams',
     ],
     fields: [
       {
@@ -158,14 +158,14 @@ export const EVENTS_DATA: EventConfig[] = [
         label: 'Availability Confirmation (1:30 PM – 1:50 PM Reporting)',
         type: 'radio',
         required: true,
-        defaultValue: 'Yes, all 4 members confirmed',
+        defaultValue: 'Yes, confirmed',
         options: [
           {
-            label: 'Confirmed: All 4 members will report between 1:30 PM – 1:50 PM on 9 September 2026',
-            value: 'Yes, all 4 members confirmed',
+            label: 'Confirmed: I will report between 1:30 PM – 1:50 PM on 9 September 2026',
+            value: 'Yes, confirmed',
           },
         ],
-        helperText: 'Mandatory reporting window for team slotting and transparent side allocation.',
+        helperText: 'Mandatory reporting window for slotting and transparent side allocation.',
       },
       {
         name: 'rulesAgreement',
@@ -175,7 +175,7 @@ export const EVENTS_DATA: EventConfig[] = [
         defaultValue: 'Agreed to rules and random draw',
         options: [
           {
-            label: 'Agreed: We accept the rules, code of conduct, and random FOR/AGAINST draw',
+            label: 'Agreed: I accept the rules, code of conduct, and random FOR/AGAINST draw',
             value: 'Agreed to rules and random draw',
           },
         ],
@@ -200,7 +200,7 @@ export const EVENTS_DATA: EventConfig[] = [
     mode: 'Offline',
     themeColor: 'from-cyan-500/20 to-blue-500/10',
     accentColor: 'text-cyan-400 border-cyan-500/30',
-    badge: 'SIH Hackathon',
+    badge: 'SIH Themed Hackathon',
     teamBased: true,
     minTeamSize: 4,
     maxTeamSize: 6,
@@ -308,7 +308,7 @@ export const EVENTS_DATA: EventConfig[] = [
     requirements: [],
     coordinators: [
       { name: 'Nishant', role: 'Event Coordinator' },
-      { name: 'Chitti', role: 'Event Coordinator' },
+      { name: 'Chitti Surya', role: 'Event Coordinator' },
     ],
     fields: [],
   },

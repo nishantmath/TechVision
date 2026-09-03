@@ -75,7 +75,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreEvents, onRegisterNow }) =>
 
           {/* ── Left: title block ─────────────────────────────── */}
           <div>
-            <div className="fig-tag mb-5">Sheet 01 — Engineer’s Week, Dept. of CSE</div>
+            <div className="fig-tag mb-5">Sheet 01 — Engineer’s Week</div>
 
             <h1 className="font-display font-bold uppercase leading-[0.9] tracking-wide mb-6">
               <span className="block text-[17vw] sm:text-7xl lg:text-[5.2rem] xl:text-[6rem] text-ink">
@@ -282,7 +282,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreEvents, onRegisterNow }) =>
                   TECHVISION-2026 REV A
                 </text>
                 <text x="70" y="352" fill="#64809f" fontSize="10" fontFamily="JetBrains Mono, monospace" letterSpacing="1.5" className="fade-late" style={{ animationDelay: '1950ms' }}>
-                  {'// S-VYASA UNIVERSITY · DEPT. OF CSE'}
+                  {'// S-VYASA UNIVERSITY'}
                 </text>
 
                 {/* Pencil note */}

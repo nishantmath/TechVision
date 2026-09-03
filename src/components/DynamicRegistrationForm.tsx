@@ -341,7 +341,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
       const result = await response.json();
 
       if (response.ok && result.success) {
-        onSubmitSuccess(result.record, result.emailWarning);
+        onSubmitSuccess(result.record);
       } else {
         if (result.duplicate || (result.error && String(result.error).toLowerCase().includes('already registered'))) {
           setSubmissionError('This email is already registered.');

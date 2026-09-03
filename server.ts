@@ -21,7 +21,7 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 const DEFAULT_GOOGLE_SHEETS_WEBHOOK_URL =
-  'https://script.google.com/macros/s/AKfycbxsbCLKrSvpeHrtC6kKb1rkmqcF9MCS3WgJlt2XhB223oMC3p60oWWaY1ao0ZONS5biPw/exec';
+  'https://script.google.com/macros/s/AKfycbwx8FG0qdZN0WebEs0lubgF6Ka4L677U43Nzq-iz01AZjejXQSFxq4xgXqtuQYA4YbKKg/exec';
 
 function normalizeEmail(email: string): string {
   return (email || '').trim().toLowerCase();
@@ -349,27 +349,9 @@ app.post('/api/register', async (req: Request, res: Response) => {
     }
 
     // EVENT-SPECIFIC TEAM REQUIREMENTS:
-    // IdeaCanvas: Exactly 3 team members.
-    // TechSpeak: Exactly 4 team members.
     // InnovateX: 4–6 team members.
     const mappedEvent = mapEventSlugToAppsScriptEvent(eventSlug);
-    if (mappedEvent === 'ideacanvas') {
-      const totalCount = 1 + (Array.isArray(teammates) ? teammates.length : 0);
-      if (totalCount !== 3) {
-        return res.status(400).json({
-          success: false,
-          error: 'IdeaCanvas requires exactly 3 team members.',
-        });
-      }
-    } else if (mappedEvent === 'techspeak') {
-      const totalCount = 1 + (Array.isArray(teammates) ? teammates.length : 0);
-      if (totalCount !== 4) {
-        return res.status(400).json({
-          success: false,
-          error: 'TechSpeak requires exactly 4 team members.',
-        });
-      }
-    } else if (mappedEvent === 'innovatex') {
+    if (mappedEvent === 'innovatex') {
       const totalCount = 1 + (Array.isArray(teammates) ? teammates.length : 0);
       if (totalCount < 4 || totalCount > 6) {
         return res.status(400).json({

@@ -78,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onSelectEvent }) => 
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[10px] tracking-[0.14em] uppercase text-faint">
-          <span>© 2026 Engineer’s Week Organizing Committee</span>
+          <span>© 2026 S-Vyasa University, Engineer’s Week Organizing Committee </span>
           <div className="flex items-center gap-5">
             <button onClick={() => onNavigate('home')} className="hover:text-fresh transition-colors">Home</button>
             <button onClick={() => onNavigate('events')} className="hover:text-fresh transition-colors">Events</button>

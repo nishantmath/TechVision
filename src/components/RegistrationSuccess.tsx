@@ -31,7 +31,7 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
       <div className="sheet-frame corner-ticks max-w-xl w-full p-8 sm:p-12 text-center relative">
         {/* Stamped approval */}
         <div className="mx-auto mb-8 w-44 h-44 border-[3px] border-pencil rounded-full flex flex-col items-center justify-center rotate-[-8deg] select-none">
-          <span className="font-mono text-[10px] tracking-[0.28em] text-pencil uppercase">TechVision ’26</span>
+          <span className="font-mono text-[10px] tracking-[0.28em] text-pencil uppercase">TechVision '26</span>
           <span className="font-display font-bold text-3xl uppercase tracking-[0.1em] text-pencil leading-none my-1">
             Registered
           </span>
