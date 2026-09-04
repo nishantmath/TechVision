@@ -58,7 +58,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
   // Teammates State (Members 2, 3, etc. - excluding Leader who is Member 1)
   const [teammates, setTeammates] = useState<TeammateInfo[]>(() => {
-    if (!event.teamBased) return [];
+    if (!event.teamBased || event.noTeammateDetails) return [];
     const count = minTeamSize - 1;
     return Array.from({ length: count }, (_, idx) => ({
       name: '',
@@ -90,7 +90,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
       if (f.defaultValue !== undefined) {
         initial[f.name] = f.defaultValue;
       } else if (f.type === 'radio' && f.options && f.options.length > 0) {
-        initial[f.name] = f.options[0].value;
+        initial[f.name] = '';
       } else if (f.type === 'select' && f.options && f.options.length > 0) {
         initial[f.name] = f.options[0].value;
       } else {
@@ -219,8 +219,8 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
     const errs: Record<string, string> = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // If Team Event: Validate each teammate's required fields
-    if (event.teamBased) {
+    // If Team Event with teammate details: Validate each teammate's required fields
+    if (event.teamBased && !event.noTeammateDetails) {
       const leaderEmail = commonInfo.email.trim().toLowerCase();
       const seenEmails = new Set<string>([leaderEmail]);
 
@@ -814,7 +814,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           </div>
 
           {/* TEAMMATES SECTION (For Team Events) */}
-          {event.teamBased && (
+          {event.teamBased && !event.noTeammateDetails && (
             <div className="space-y-6">
               <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-slate-800">
                 <div className="flex items-center gap-2">

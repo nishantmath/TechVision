@@ -53,6 +53,7 @@ export interface EventConfig {
   minTeamSize?: number;
   maxTeamSize?: number;
   noRegistrationRequired?: boolean;
+  noTeammateDetails?: boolean;
   targetParticipants?: string;
   recommendedCapacity?: string;
   scalableCapacity?: string;

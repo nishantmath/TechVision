@@ -349,9 +349,18 @@ app.post('/api/register', async (req: Request, res: Response) => {
     }
 
     // EVENT-SPECIFIC TEAM REQUIREMENTS:
+    // TechSpeak: 4–5 team members (leader only registers, no teammate details).
     // InnovateX: 4–6 team members.
     const mappedEvent = mapEventSlugToAppsScriptEvent(eventSlug);
-    if (mappedEvent === 'innovatex') {
+    if (mappedEvent === 'techspeak') {
+      const declaredSize = Number(eventData?.teamSize || teamSize || 0);
+      if (declaredSize < 4 || declaredSize > 5) {
+        return res.status(400).json({
+          success: false,
+          error: 'TechSpeak requires a team of 4 or 5 members.',
+        });
+      }
+    } else if (mappedEvent === 'innovatex') {
       const totalCount = 1 + (Array.isArray(teammates) ? teammates.length : 0);
       if (totalCount < 4 || totalCount > 6) {
         return res.status(400).json({
