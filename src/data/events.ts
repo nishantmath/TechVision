@@ -261,7 +261,29 @@ export const EVENTS_DATA: EventConfig[] = [
       'Venue: 2nd Floor Lab',
       'Team Size: 4–6 Members',
     ],
-    fields: [],
+    fields: [
+      {
+        name: 'sihProblemStatementId',
+        label: 'SIH Problem Statement ID',
+        type: 'text',
+        placeholder: 'e.g. SIH1234',
+        required: true,
+      },
+      {
+        name: 'sihTheme',
+        label: 'Theme',
+        type: 'text',
+        placeholder: 'e.g. Smart Education, MedTech, Cyber Security',
+        required: true,
+      },
+      {
+        name: 'problemStatement',
+        label: 'Problem Statement',
+        type: 'textarea',
+        placeholder: 'Describe the problem statement your team is working on.',
+        required: true,
+      },
+    ],
   },
   {
     number: '04',
