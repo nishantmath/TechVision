@@ -208,7 +208,7 @@ export const EVENTS_DATA: EventConfig[] = [
     maxTeamSize: 6,
     theme: 'SMART INDIA HACKATHON',
     eligibility: [
-      'Open to all B.Tech students of SVYSA University',
+      'Open to B.Tech students of S-VYASA University only',
       'Team size: 4–6 Members',
     ],
     rules: [
