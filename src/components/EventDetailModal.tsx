@@ -357,9 +357,13 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
-            <span className="font-mono text-[11px] text-fresh uppercase tracking-[0.14em] py-3">
-              Open to all — just show up
-            </span>
+            <button
+              disabled
+              className="btn-outline px-6 py-3 text-xs font-semibold uppercase tracking-[0.1em] opacity-60 cursor-default flex items-center gap-2"
+            >
+              <span>Registration Closed</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           )}
         </div>
       </div>

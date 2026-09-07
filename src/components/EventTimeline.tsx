@@ -114,7 +114,15 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                           >
                             View details
                           </button>
-                          {!event.noRegistrationRequired && (
+                          {event.noRegistrationRequired ? (
+                            <button
+                              disabled
+                              className="btn-outline px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.1em] flex items-center gap-1.5 opacity-60 cursor-default"
+                            >
+                              <span>Registration Closed</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </button>
+                          ) : (
                             <button
                               onClick={() => onRegisterEvent(event.slug)}
                               className="btn-pencil px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.1em] flex items-center gap-1.5"

@@ -80,6 +80,7 @@ export const EVENTS_DATA: EventConfig[] = [
       'Open to all engineering students of S-VYASA University',
     ],
     fields: [],
+    noRegistrationRequired: true,
   },
   {
     number: '02',

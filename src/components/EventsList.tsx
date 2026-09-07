@@ -114,7 +114,7 @@ export const EventsList: React.FC<EventsListProps> = ({
                     ) : event.noRegistrationRequired ? (
                       <>
                         <PartyPopper className="w-3.5 h-3.5" />
-                        Open event
+                        Registration Closed
                       </>
                     ) : (
                       <>
@@ -169,7 +169,16 @@ export const EventsList: React.FC<EventsListProps> = ({
                   >
                     Details
                   </button>
-                  {!event.noRegistrationRequired && (
+                  {event.noRegistrationRequired ? (
+                    <button
+                      id={`btn-register-${event.slug}`}
+                      disabled
+                      className="btn-outline flex-[1.3] py-3 text-xs font-semibold uppercase tracking-[0.1em] flex items-center justify-center gap-1.5 opacity-60 cursor-default"
+                    >
+                      <span>Registration Closed</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  ) : (
                     <button
                       id={`btn-register-${event.slug}`}
                       onClick={() => onRegisterEvent(event.slug)}

@@ -2,11 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import { Reveal } from './Reveal';
 
-const prettyName = (url: string) =>
-  decodeURIComponent(url.split('/').pop() || '')
-    .replace(/\.[^.]+$/, '')
-    .replace(/[-_]+/g, ' ')
-    .toUpperCase();
+const POSTER_NAMES: Record<string, string> = {
+  '01': 'IDEACANVAS',
+  '02': 'TECHSPEAK',
+  '03': 'INNOVATEX',
+  '04': 'CODERUSH',
+  '05': 'IIC IGNITE',
+  '06': 'ENGINEERS DAY',
+};
+
+const prettyName = (url: string) => {
+  const base = decodeURIComponent(url.split('/').pop() || '').replace(/\.[^.]+$/, '');
+  return POSTER_NAMES[base] || base.replace(/[-_]+/g, ' ').toUpperCase();
+};
 
 export const Posters: React.FC = () => {
   const [posters, setPosters] = useState<string[]>([]);
