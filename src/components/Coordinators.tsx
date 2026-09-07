@@ -27,7 +27,7 @@ export const Coordinators: React.FC = () => {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 justify-items-center gap-5">
           {withCoordinators.map((event, idx) => (
             <Reveal key={event.slug} delay={(idx % 4) * 80}>
               <div className="sheet-frame corner-ticks h-full p-5 flex flex-col hover:border-fresh/50 hover:bg-panel/70 transition-all duration-300">
