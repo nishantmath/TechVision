@@ -27,10 +27,10 @@ export const Coordinators: React.FC = () => {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 justify-items-center gap-8 lg:gap-x-6">
+        <div className="flex flex-wrap justify-center gap-8">
            {withCoordinators.map((event, idx) => (
              <Reveal key={event.slug} delay={(idx % 4) * 80}>
-               <div className="sheet-frame corner-ticks w-full max-w-[280px] p-6 flex flex-col hover:border-fresh/50 hover:bg-panel/70 transition-all duration-300">
+               <div className="sheet-frame corner-ticks w-[260px] p-6 flex flex-col hover:border-fresh/50 hover:bg-panel/70 transition-all duration-300">
                 <div className="flex items-center justify-between mb-4 font-mono text-[10px] tracking-[0.14em] uppercase">
                   <span className="text-fresh">E-{event.number}</span>
                   <span className="text-faint flex items-center gap-1.5">
