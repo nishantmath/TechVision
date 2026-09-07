@@ -3,12 +3,12 @@ import { ChevronLeft, ChevronRight, Images } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 const POSTER_NAMES: Record<string, string> = {
-  '01': 'IDEACANVAS',
-  '02': 'TECHSPEAK',
-  '03': 'INNOVATEX',
-  '04': 'CODERUSH',
-  '05': 'IIC IGNITE',
-  '06': 'ENGINEERS DAY',
+  '01': "ENGINEER'S WEEK",
+  '02': 'IDEACANVAS – POSTER CHALLENGE',
+  '03': 'TECHSPEAK - TECHNICAL DEBATE',
+  '04': 'INNOVATEX – SIH 2026 HACKATHON',
+  '05': 'CODERUSH – COMPETITIVE PROGRAMMING CHALLENGE',
+  '06': 'IIC IGNITE – INNOVATION & ENTREPRENEURSHIP AWARENESS CAMP',
 };
 
 const prettyName = (url: string) => {

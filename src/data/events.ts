@@ -364,7 +364,7 @@ export const EVENTS_DATA: EventConfig[] = [
     requirements: [],
     schedule: [],
     coordinators: [
-      { name: 'Chetna', role: 'Event Coordinator' },
+      { name: 'Chetana', role: 'Event Coordinator' },
       { name: 'Tarun', role: 'Event Coordinator' },
     ],
     format: [],
