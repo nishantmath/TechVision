@@ -254,8 +254,10 @@ export const EVENTS_DATA: EventConfig[] = [
       'Smart Manufacturing',
       'Open Innovation',
     ],
-    // Kept empty - not provided
-    coordinators: [],
+    coordinators: [
+      { name: 'Govind', role: 'Point of Contact' },
+      { name: 'Kalmadi SaiSiddi', role: 'Point of Contact' },
+    ],
     schedule: [],
     requirements: [],
     format: [
