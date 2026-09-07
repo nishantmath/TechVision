@@ -551,7 +551,8 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                   )}
                 </div>
 
-                {/* Team Size Selector */}
+                {/* Team Size Selector — hidden for IdeaCanvas */}
+                {event.slug !== 'ideacanvas' && (
                 <div>
                   <label className="block text-xs font-mono font-medium text-slate-300 mb-1.5">
                     Total Team Size <span className="text-cyan-400">*</span>
@@ -583,6 +584,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                     1 Leader + {teamSize - 1} {teamSize - 1 === 1 ? 'Teammate' : 'Teammates'}
                   </p>
                 </div>
+                )}
               </div>
             </div>
           )}
@@ -814,7 +816,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           </div>
 
           {/* TEAMMATES SECTION (For Team Events) */}
-          {event.teamBased && !event.noTeammateDetails && (
+          {event.teamBased && !event.noTeammateDetails && teammates.length > 0 && (
             <div className="space-y-6">
               <div className="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-slate-800">
                 <div className="flex items-center gap-2">

@@ -18,9 +18,10 @@ export const EVENTS_DATA: EventConfig[] = [
     themeColor: 'from-amber-500/20 to-orange-500/10',
     accentColor: 'text-amber-400 border-amber-500/30',
     badge: 'AI Poster Challenge',
-    teamBased: false,
+    teamBased: true,
     minTeamSize: 1,
-    maxTeamSize: 1,
+    maxTeamSize: 3,
+    noTeammateDetails: true,
     rules: [
       'Individual participation — each participant creates their own poster.',
       'Posters must be created during the official competition duration.',
@@ -74,7 +75,7 @@ export const EVENTS_DATA: EventConfig[] = [
     requirements: [],
     format: [],
     eligibility: [
-      'Individual participation — no teams',
+      'Team participation — maximum 3 members per team',
       'Open to all engineering students of S-VYASA University',
     ],
     fields: [],
