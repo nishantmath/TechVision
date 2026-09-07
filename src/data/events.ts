@@ -23,8 +23,8 @@ export const EVENTS_DATA: EventConfig[] = [
     maxTeamSize: 3,
     noTeammateDetails: true,
     rules: [
-      'Individual participation — each participant creates their own poster.',
-      'Posters must be created during the official competition duration.',
+      'Teams of up to 3 members — only the team lead registers on behalf of the team.',
+      'Each team creates one poster collaboratively during the official competition duration.',
       'Pre-made or previously created posters are not allowed.',
       'AI-powered tools may be used to generate visuals, concepts, layouts and creative elements.',
       'Participants must bring their own laptops and charging accessories.',
@@ -75,7 +75,8 @@ export const EVENTS_DATA: EventConfig[] = [
     requirements: [],
     format: [],
     eligibility: [
-      'Team participation — maximum 3 members per team',
+      'Team participation — up to 3 members per team',
+      'Only the team lead needs to register; teammates are not registered individually',
       'Open to all engineering students of S-VYASA University',
     ],
     fields: [],
@@ -187,13 +188,13 @@ export const EVENTS_DATA: EventConfig[] = [
   {
     number: '03',
     slug: 'innovatex',
-    name: 'InnovateX – SIH 2026 Hackathon',
+    name: 'InnovateX – Hackathon 2026',
     subtitle: 'Innovate. Collaborate. Build.',
     tagline: '12 hours of rapid ideation, coding, prototype development, and impact demonstration',
     shortDescription:
-      'An innovation-focused hackathon inspired by the Smart India Hackathon where students identify real-world problems and develop innovative, practical and technology-driven solutions.',
+      'An innovation-focused hackathon themed on the Smart India Hackathon (SIH), where students identify real-world problems and develop innovative, practical and technology-driven solutions.',
     fullDescription:
-      'An innovation-focused hackathon inspired by the Smart India Hackathon where students identify real-world problems and develop innovative, practical and technology-driven solutions.',
+      'An innovation-focused hackathon themed on the Smart India Hackathon (SIH), where students identify real-world problems and develop innovative, practical and technology-driven solutions.',
     date: '2026-09-10',
     formattedDate: '10 September 2026',
     time: '7:00 AM – 7:00 PM',
@@ -201,7 +202,7 @@ export const EVENTS_DATA: EventConfig[] = [
     mode: 'Offline',
     themeColor: 'from-cyan-500/20 to-blue-500/10',
     accentColor: 'text-cyan-400 border-cyan-500/30',
-    badge: 'SIH Themed Hackathon',
+    badge: 'Hackathon',
     teamBased: true,
     minTeamSize: 4,
     maxTeamSize: 6,

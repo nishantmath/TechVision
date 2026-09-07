@@ -48,6 +48,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
   onCancel,
 }) => {
   // Step 1: Personal / Team Leader Details, Step 2: Teammates & Event Details, Step 3: Review & Submit
+  const skipStep2 = event.noTeammateDetails && (!event.fields || event.fields.length === 0);
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   // Team Details State (for team-based events)
@@ -302,7 +303,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
         college: t.college || commonInfo.college,
       }))
     );
-    setCurrentStep(2);
+    setCurrentStep(skipStep2 ? 3 : 2);
   };
 
   const handleNextStep2 = (e: React.FormEvent) => {
@@ -427,69 +428,109 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
 
       {/* Multi-Step Progress Indicator */}
       <div className="mb-8">
-        <div className="flex items-center justify-between max-w-2xl mx-auto relative">
-          {/* Connector lines */}
-          <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-0.5 bg-slate-800 -z-0">
-            <div
-              className="h-full bg-pencil transition-all duration-300"
-              style={{
-                width: currentStep === 1 ? '0%' : currentStep === 2 ? '50%' : '100%',
-              }}
-            />
-          </div>
-
-          {/* Step 1 Node */}
-          <div className="flex flex-col items-center relative z-10">
-            <button
-              onClick={() => setCurrentStep(1)}
-              className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
-                currentStep >= 1
-                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
-                  : 'bg-slate-850 text-slate-400 border border-slate-700'
-              }`}
-            >
-              {currentStep > 1 ? <CheckCircle2 className="w-5 h-5" /> : '01'}
-            </button>
-            <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 1 ? 'text-cyan-400' : 'text-slate-400'}`}>
-              {event.teamBased ? 'Team & Leader' : 'Personal Info'}
-            </span>
-          </div>
-
-          {/* Step 2 Node */}
-          <div className="flex flex-col items-center relative z-10">
-            <button
-              onClick={() => {
-                if (validateStep1()) setCurrentStep(2);
-              }}
-              className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
-                currentStep >= 2
-                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
-              }`}
-            >
-              {currentStep > 2 ? <CheckCircle2 className="w-5 h-5" /> : '02'}
-            </button>
-            <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 2 ? 'text-cyan-400' : 'text-slate-400'}`}>
-              {event.teamBased ? 'Teammates & Details' : 'Event Details'}
-            </span>
-          </div>
-
-          {/* Step 3 Node */}
-          <div className="flex flex-col items-center relative z-10">
-            <div
-              className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
-                currentStep === 3
-                  ? 'bg-pencil text-white shadow-md shadow-pencil/25'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
-              }`}
-            >
-              03
+        {skipStep2 ? (
+          /* 2-step indicator: Step 1 → Review */
+          <div className="flex items-center justify-center gap-16 max-w-md mx-auto relative">
+            <div className="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-0.5 bg-slate-800 -z-0">
+              <div
+                className="h-full bg-pencil transition-all duration-300"
+                style={{ width: currentStep === 1 ? '0%' : '100%' }}
+              />
             </div>
-            <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 3 ? 'text-cyan-400' : 'text-slate-400'}`}>
-              Review & Submit
-            </span>
+
+            <div className="flex flex-col items-center relative z-10">
+              <button
+                onClick={() => setCurrentStep(1)}
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                  currentStep >= 1
+                    ? 'bg-pencil text-white shadow-md shadow-pencil/25'
+                    : 'bg-slate-850 text-slate-400 border border-slate-700'
+                }`}
+              >
+                {currentStep > 1 ? <CheckCircle2 className="w-5 h-5" /> : '01'}
+              </button>
+              <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 1 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                {event.teamBased ? 'Team & Leader' : 'Personal Info'}
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center relative z-10">
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                  currentStep === 3
+                    ? 'bg-pencil text-white shadow-md shadow-pencil/25'
+                    : 'bg-slate-900 text-slate-400 border border-slate-800'
+                }`}
+              >
+                02
+              </div>
+              <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 3 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                Review & Submit
+              </span>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* 3-step indicator */
+          <div className="flex items-center justify-between max-w-2xl mx-auto relative">
+            <div className="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-0.5 bg-slate-800 -z-0">
+              <div
+                className="h-full bg-pencil transition-all duration-300"
+                style={{
+                  width: currentStep === 1 ? '0%' : currentStep === 2 ? '50%' : '100%',
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col items-center relative z-10">
+              <button
+                onClick={() => setCurrentStep(1)}
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                  currentStep >= 1
+                    ? 'bg-pencil text-white shadow-md shadow-pencil/25'
+                    : 'bg-slate-850 text-slate-400 border border-slate-700'
+                }`}
+              >
+                {currentStep > 1 ? <CheckCircle2 className="w-5 h-5" /> : '01'}
+              </button>
+              <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 1 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                {event.teamBased ? 'Team & Leader' : 'Personal Info'}
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center relative z-10">
+              <button
+                onClick={() => {
+                  if (validateStep1()) setCurrentStep(2);
+                }}
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                  currentStep >= 2
+                    ? 'bg-pencil text-white shadow-md shadow-pencil/25'
+                    : 'bg-slate-900 text-slate-400 border border-slate-800'
+                }`}
+              >
+                {currentStep > 2 ? <CheckCircle2 className="w-5 h-5" /> : '02'}
+              </button>
+              <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 2 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                {event.teamBased && !event.noTeammateDetails ? 'Teammates & Details' : 'Event Details'}
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center relative z-10">
+              <div
+                className={`w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                  currentStep === 3
+                    ? 'bg-pencil text-white shadow-md shadow-pencil/25'
+                    : 'bg-slate-900 text-slate-400 border border-slate-800'
+                }`}
+              >
+                03
+              </div>
+              <span className={`text-xs font-mono mt-2 font-medium ${currentStep === 3 ? 'text-cyan-400' : 'text-slate-400'}`}>
+                Review & Submit
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* STEP 1: PERSONAL OR TEAM LEADER DETAILS */}
@@ -500,7 +541,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
               {event.teamBased ? (
                 <>
                   <Users className="w-5 h-5 text-cyan-400" />
-                  <span>Step 1: Team Profile & Team Leader Info</span>
+                  <span>Step 1: {skipStep2 ? 'Team Registration' : 'Team Profile & Team Leader Info'}</span>
                 </>
               ) : (
                 <>
@@ -511,7 +552,9 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             </h2>
             <p className="text-xs text-slate-400 mt-1">
               {event.teamBased
-                ? 'Specify your team name and total member count, followed by the Team Leader’s details.'
+                ? skipStep2
+                  ? 'Enter your team details and the team leader\'s information.'
+                  : 'Specify your team name and total member count, followed by the Team Leader\'s details.'
                 : 'Required for student verification and official participation certificate generation.'}
             </p>
           </div>
@@ -586,6 +629,14 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                 </div>
                 )}
               </div>
+            </div>
+          )}
+
+          {/* Team Registration Note */}
+          {event.teamBased && event.noTeammateDetails && (
+            <div className="flex items-start gap-3 px-4 py-3 rounded-sm bg-purple-950/40 border border-purple-500/25 text-xs font-mono text-purple-300">
+              <Info className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+              <span>Only the team lead needs to register for this event. Teammates are not registered individually.</span>
             </div>
           )}
 
@@ -791,7 +842,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
               id="step1-continue-btn"
               className="btn-pencil px-6 py-3.5 text-sm font-semibold flex items-center justify-center gap-2 w-full sm:w-auto"
             >
-              <span>{event.teamBased ? 'Continue to Teammates Info' : 'Continue to Event Details'}</span>
+              <span>{skipStep2 ? 'Review Information' : event.teamBased && !event.noTeammateDetails ? 'Continue to Teammates Info' : 'Continue to Event Details'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -799,19 +850,19 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
       )}
 
       {/* STEP 2: TEAMMATES INFO & DYNAMIC EVENT DETAILS */}
-      {currentStep === 2 && (
+      {currentStep === 2 && !skipStep2 && (
         <form onSubmit={handleNextStep2} className="bg-slate-900/80 rounded-sm p-6 sm:p-8 border border-slate-800 shadow-xl space-y-8 animate-in fade-in duration-200">
           <div className="border-b border-slate-800 pb-4">
             <h2 className="text-2xl font-display font-semibold uppercase tracking-wide text-white flex items-center gap-2">
               <Layers className="w-5 h-5 text-cyan-400" />
               <span>
-                Step 2: {event.teamBased ? 'Teammates & Event Information' : `${event.name} Specific Details`}
+                Step 2: {event.teamBased && !event.noTeammateDetails ? 'Teammates & Event Information' : `${event.name} Specific Details`}
               </span>
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              {event.teamBased
+              {event.teamBased && !event.noTeammateDetails
                 ? 'Fill in the information for all teammates in your team, followed by the project/technical submission specifics.'
-                : 'Configuration required specifically for this event’s evaluation criteria.'}
+                : 'Provide the event-specific details required for evaluation.'}
             </p>
           </div>
 
@@ -1261,20 +1312,33 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div>
-                  <span className="text-slate-500 block">Team Name:</span>
-                  <span className="text-white font-bold text-sm font-display text-cyan-300">{teamName}</span>
+              {event.teamBased && !event.noTeammateDetails ? (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                  <div>
+                    <span className="text-slate-500 block">Team Name:</span>
+                    <span className="text-white font-bold text-sm font-display text-cyan-300">{teamName}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">Total Team Size:</span>
+                    <span className="text-white font-medium">{teamSize} Members (1 Leader + {teammates.length} Teammates)</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">Lead College:</span>
+                    <span className="text-white font-medium truncate block">{commonInfo.college}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-slate-500 block">Total Team Size:</span>
-                  <span className="text-white font-medium">{teamSize} Members (1 Leader + {teammates.length} Teammates)</span>
+              ) : event.teamBased ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <span className="text-slate-500 block">Participation:</span>
+                    <span className="text-white font-medium">Team (1–{event.maxTeamSize} Members)</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">College:</span>
+                    <span className="text-white font-medium truncate block">{commonInfo.college}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-slate-500 block">Lead College:</span>
-                  <span className="text-white font-medium truncate block">{commonInfo.college}</span>
-                </div>
-              </div>
+              ) : null}
             </div>
           )}
 
@@ -1282,7 +1346,7 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
           <div className="bg-slate-950/70 p-5 rounded-sm border border-slate-800 space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
               <h3 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                {event.teamBased ? (
+                {event.teamBased && !event.noTeammateDetails ? (
                   <>
                     <Crown className="w-3.5 h-3.5 text-amber-400" />
                     <span>Member 1: Team Leader (Primary Contact)</span>
@@ -1442,11 +1506,11 @@ export const DynamicRegistrationForm: React.FC<DynamicRegistrationFormProps> = (
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => setCurrentStep(2)}
+              onClick={() => setCurrentStep(skipStep2 ? 1 : 2)}
               className="px-5 py-2.5 rounded-sm bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-medium transition-colors flex items-center justify-center gap-1.5 w-full sm:w-auto"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Step 2</span>
+              <span>Back to {skipStep2 ? 'Step 1' : 'Step 2'}</span>
             </button>
 
             <button

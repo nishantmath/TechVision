@@ -6,7 +6,7 @@ const NOTES = [
   {
     icon: Lightbulb,
     title: 'Innovation with impact',
-    note: 'Tackle problem statements aligned with Smart India Hackathon 2026 and pitch working solutions to a real jury.',
+    note: 'Tackle problem statements themed on the Smart India Hackathon (SIH) and pitch working solutions to a real jury.',
     ref: '// 01',
   },
   {
