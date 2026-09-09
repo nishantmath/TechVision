@@ -185,6 +185,7 @@ export const EVENTS_DATA: EventConfig[] = [
         helperText: 'Teams do NOT select FOR or AGAINST. Sides are assigned randomly by organizers.',
       },
     ],
+    noRegistrationRequired: true,
   },
   {
     number: '03',
@@ -289,6 +290,7 @@ export const EVENTS_DATA: EventConfig[] = [
         required: true,
       },
     ],
+    noRegistrationRequired: true,
   },
   {
     number: '04',
