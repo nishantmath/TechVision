@@ -352,6 +352,12 @@ app.post('/api/register', async (req: Request, res: Response) => {
     // TechSpeak: 4–5 team members (leader only registers, no teammate details).
     // InnovateX: 4–6 team members.
     const mappedEvent = mapEventSlugToAppsScriptEvent(eventSlug);
+    if (mappedEvent === 'coderush') {
+      return res.status(400).json({
+        success: false,
+        error: 'Registrations for CodeRush are now closed.',
+      });
+    }
     if (mappedEvent === 'techspeak') {
       const declaredSize = Number(eventData?.teamSize || teamSize || 0);
       if (declaredSize < 4 || declaredSize > 5) {

@@ -114,7 +114,11 @@ export const EventTimeline: React.FC<EventTimelineProps> = ({
                           >
                             View details
                           </button>
-                          {event.noRegistrationRequired ? (
+                          {event.openToAll ? (
+                            <span className="font-mono text-[11px] text-fresh uppercase tracking-[0.14em] py-2.5">
+                              Open to all — just show up
+                            </span>
+                          ) : event.noRegistrationRequired ? (
                             <button
                               disabled
                               className="btn-outline px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.1em] flex items-center gap-1.5 opacity-60 cursor-default"

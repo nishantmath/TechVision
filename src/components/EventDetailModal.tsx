@@ -344,7 +344,11 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           >
             Close
           </button>
-          {!event.noRegistrationRequired ? (
+          {event.openToAll ? (
+            <span className="font-mono text-[11px] text-fresh uppercase tracking-[0.14em] py-3">
+              Open to all — just show up
+            </span>
+          ) : !event.noRegistrationRequired ? (
             <button
               id={`modal-register-${event.slug}`}
               onClick={() => {

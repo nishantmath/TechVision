@@ -111,6 +111,11 @@ export const EventsList: React.FC<EventsListProps> = ({
                         <Users className="w-3.5 h-3.5" />
                         Team of {event.minTeamSize === event.maxTeamSize ? event.minTeamSize : `${event.minTeamSize}–${event.maxTeamSize}`}
                       </>
+                    ) : event.openToAll ? (
+                      <>
+                        <PartyPopper className="w-3.5 h-3.5" />
+                        Open event
+                      </>
                     ) : event.noRegistrationRequired ? (
                       <>
                         <PartyPopper className="w-3.5 h-3.5" />
@@ -169,7 +174,11 @@ export const EventsList: React.FC<EventsListProps> = ({
                   >
                     Details
                   </button>
-                  {event.noRegistrationRequired ? (
+                  {event.openToAll ? (
+                    <span className="flex-[1.3] py-3 font-mono text-[11px] text-fresh uppercase tracking-[0.14em] flex items-center justify-center">
+                      Open to all — just show up
+                    </span>
+                  ) : event.noRegistrationRequired ? (
                     <button
                       id={`btn-register-${event.slug}`}
                       disabled

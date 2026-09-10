@@ -339,6 +339,7 @@ export const EVENTS_DATA: EventConfig[] = [
       { name: 'Nishant', role: 'Event Coordinator' },
       { name: 'Chitti Surya', role: 'Event Coordinator' },
     ],
+    noRegistrationRequired: true,
     fields: [],
   },
   {
@@ -406,6 +407,7 @@ export const EVENTS_DATA: EventConfig[] = [
     minTeamSize: 1,
     maxTeamSize: 1,
     noRegistrationRequired: true,
+    openToAll: true,
     fullDescription: '',
     shortDescription: '',
     rules: [],
